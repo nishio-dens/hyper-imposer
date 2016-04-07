@@ -16,7 +16,9 @@
     "server": "webpack-dev-server --inline --progress --profile --colors --display-error-details --display-cached --port 3000 --host 0.0.0.0",
     "start": "npm run server"
   },
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^2.2.3"
+  },
   "devDependencies": {
     "css-loader": "^0.23.0",
     "exports-loader": "0.6.2",
