@@ -1,7 +1,10 @@
-/// <reference path="main/ambient/jquery/index.d.ts" />
+/// <reference path="../typings/main.d.ts" />
 
-class Bootstrap {
-  function main() {
-    console.log("Hello");
+namespace HyperImposer {
+  export class Bootstrap {
+
+    public main() {
+      console.log('Hello');
+    }
   }
 }
