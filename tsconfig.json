@@ -16,7 +16,7 @@
     "./test/**/*.ts",
     "!./node_modules/**/*.ts"
   ],
-  "compileOnSave": true,
+  "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
     "rewriteTsconfig": true
