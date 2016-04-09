@@ -6,14 +6,14 @@ namespace HyperImposer {
     private debug = false;
 
     constructor(debug: boolean) {
-      this.debug = debug;
+      (<any>window).HyperImporserDebug = debug;
       if (this.isDebugMode()) {
         console.log('Initialize HyperImposer');
       }
     }
 
     public isDebugMode() {
-      return this.debug;
+      return (<any>window).HyperImporserDebug;
     }
   }
 }
