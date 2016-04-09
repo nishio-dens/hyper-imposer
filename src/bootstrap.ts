@@ -1,6 +1,6 @@
 /// <reference path="../typings/main.d.ts" />
 
-module HyperImposer {
+namespace HyperImposer {
   export class Bootstrap {
 
     private debug = false;

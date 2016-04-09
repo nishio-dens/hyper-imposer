@@ -1,0 +1,28 @@
+<html lang="jp">
+  <head>
+    <title>Caption</title>
+    <meta charset="UTF-8" />
+    <style type="text/css">
+      canvas { border: 1px solid #999; }
+
+      @font-face {
+        font-family: 'GenShin';
+        src: url("./font.ttf") format('truetype');
+      }
+
+      body {
+        font-family: 'GenShin';
+      }
+    </style>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="../__build__/common.js"></script>
+    <script src="../__build__/app.js"></script>
+  </head>
+  <body>
+    <canvas id="captionCanvas" width="960" height="540"></canvas>
+
+    <script>
+    var imposer = new window.HyperImposer(true);
+    </script>
+  </body>
+</html>
