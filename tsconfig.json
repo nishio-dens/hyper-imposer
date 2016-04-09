@@ -11,6 +11,7 @@
   "files": [
     "./src/bootstrap.ts",
     "./src/renderer/aspectRatio.ts",
+    "./src/renderer/canvas.ts",
     "./src/renderer/renderer.ts",
     "./src/renderer/virtualCanvasSize.ts"
   ],

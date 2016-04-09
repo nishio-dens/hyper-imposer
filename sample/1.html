@@ -21,9 +21,27 @@
   <body>
     <canvas id="captionCanvas" width="960" height="540"></canvas>
 
+    <button onclick="window.clear()">Clear</button>
+    <button onclick="window.redraw()">Redraw</button>
+
     <script>
     var imposer = new HyperImposer.Bootstrap(true);
-    imposer.initializeRenderer(960, 540, HyperImposer.AspectRatio.AR16_9);
+    var width = document.getElementById("captionCanvas").width;
+    var height = document.getElementById("captionCanvas").height;
+
+    var renderer = imposer.initializeRenderer(
+      "captionCanvas", width, height, HyperImposer.AspectRatio.AR16_9
+    );
+    renderer.render();
+
+    window.clear = function clear() {
+      renderer.clear();
+    }
+
+    window.redraw = function redraw() {
+      renderer.clear();
+      renderer.render();
+    }
     </script>
   </body>
 </html>

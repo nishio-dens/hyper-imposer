@@ -8,18 +8,21 @@ export class Bootstrap {
   private renderer: Renderer;
 
   constructor(debug: boolean) {
-    (<any>window).HyperImporserDebug = debug;
+    this.debug = debug;
     if (this.isDebugMode()) {
       console.log("Initialize HyperImposer");
     }
   }
 
-  public initializeRenderer(width: number, height: number, aspect: AspectRatio) {
-    this.renderer = new Renderer(width, height, aspect);
+  public initializeRenderer(canvasId: string, width: number, height: number, aspect: AspectRatio) {
+    this.renderer = new Renderer(canvasId, width, height, aspect);
+    this.renderer.setDebugMode(this.isDebugMode());
+
+    return this.renderer;
   }
 
   public isDebugMode() {
-    return (<any>window).HyperImporserDebug;
+    return this.debug;
   }
 }
 
