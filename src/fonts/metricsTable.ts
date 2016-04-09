@@ -9,7 +9,7 @@ export class MetricsTable {
     this.table = {};
     var metricsArray = metricsCsv.split("\n");
 
-    for (var row in metricsArray) {
+    for(var row of metricsArray) {
       var m = row.split(",");
       var metrics = new Metrics({
         code:   m[0],
