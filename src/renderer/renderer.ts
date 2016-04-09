@@ -3,17 +3,20 @@
 import { AspectRatio } from "./aspectRatio";
 import { VirtualCanvasSize } from "./virtualCanvasSize";
 import { VirtualCanvas } from "./virtualCanvas";
+import { MetricsTable } from "../fonts/metricsTable";
 
 export class Renderer {
   // canvas
   private canvas: VirtualCanvas;
+  private metricsTable: MetricsTable;
   private isDebug: boolean;
 
   private virtualCanvasWidth: number;
   private virtualCanvasHeight: number;
 
   constructor(canvasId: string, canvasWidth: number,
-              canvasHeight: number, aspectRatio: AspectRatio) {
+              canvasHeight: number, aspectRatio: AspectRatio,
+              fontMetricsCsv: string) {
     if (aspectRatio === AspectRatio.AR16_9) {
       this.virtualCanvasWidth = VirtualCanvasSize.AR16_9_WIDTH;
       this.virtualCanvasHeight = VirtualCanvasSize.AR16_9_HEIGHT;
@@ -26,6 +29,9 @@ export class Renderer {
     this.canvas = new VirtualCanvas(
       canvasId, canvasWidth, canvasHeight, this.virtualCanvasWidth, this.virtualCanvasHeight
     );
+
+    this.metricsTable = new MetricsTable();
+    this.metricsTable.initializeMetrics(fontMetricsCsv);
   }
 
   public setDebugMode(isDebug: boolean) {
