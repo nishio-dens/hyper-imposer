@@ -1,6 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import { AspectRatio } from "./aspectRatio";
+import { VirtualCanvasSize } from "./virtualCanvasSize";
 
 export class Renderer {
   // レンダリングするCanvasの幅
@@ -15,6 +16,14 @@ export class Renderer {
   constructor(canvasWidth: number, canvasHeight: number, aspectRatio: AspectRatio) {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
+
+    if (aspectRatio === AspectRatio.AR16_9) {
+      this.virtualCanvasWidth = VirtualCanvasSize.AR16_9_WIDTH;
+      this.virtualCanvasHeight = VirtualCanvasSize.AR16_9_HEIGHT;
+    } else {
+      this.virtualCanvasWidth = VirtualCanvasSize.AR4_3_WIDTH;
+      this.virtualCanvasHeight = VirtualCanvasSize.AR4_3_HEIGHT;
+    }
   }
 
   public setCanvasSize(canvasWidth: number, canvasHeight: number) {
