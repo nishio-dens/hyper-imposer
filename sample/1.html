@@ -22,7 +22,8 @@
     <canvas id="captionCanvas" width="960" height="540"></canvas>
 
     <script>
-    var imposer = new window.HyperImposer(true);
+    var imposer = new HyperImposer.Bootstrap(true);
+    imposer.initializeRenderer(960, 540, HyperImposer.AspectRatio.AR16_9);
     </script>
   </body>
 </html>

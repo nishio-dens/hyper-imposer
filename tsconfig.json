@@ -10,7 +10,7 @@
   },
   "files": [
     "./src/bootstrap.ts",
-    "./src/renderer/aspert.ts",
+    "./src/renderer/aspectRatio.ts",
     "./src/renderer/renderer.ts"
   ],
   "filesGlob": [

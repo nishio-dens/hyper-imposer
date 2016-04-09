@@ -1,23 +1,31 @@
 /// <reference path="../typings/main.d.ts" />
 
-namespace HyperImposer {
-  export class Bootstrap {
+import { AspectRatio } from "./renderer/aspectRatio";
+import { Renderer } from "./renderer/renderer";
 
-    private debug = false;
+export class Bootstrap {
+  private debug = false;
+  private renderer: Renderer;
 
-    constructor(debug: boolean) {
-      (<any>window).HyperImporserDebug = debug;
-      if (this.isDebugMode()) {
-        console.log('Initialize HyperImposer');
-      }
+  constructor(debug: boolean) {
+    (<any>window).HyperImporserDebug = debug;
+    if (this.isDebugMode()) {
+      console.log("Initialize HyperImposer");
     }
+  }
 
-    public isDebugMode() {
-      return (<any>window).HyperImporserDebug;
-    }
+  public initializeRenderer(width: number, height: number, aspect: AspectRatio) {
+    this.renderer = new Renderer(width, height, aspect);
+  }
+
+  public isDebugMode() {
+    return (<any>window).HyperImporserDebug;
   }
 }
 
 (function() {
-  (<any>window).HyperImposer = HyperImposer.Bootstrap;
+  (<any>window).HyperImposer = {
+    Bootstrap: Bootstrap,
+    AspectRatio: AspectRatio
+  };
 })();
