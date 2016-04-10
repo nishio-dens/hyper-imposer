@@ -58,55 +58,42 @@ export class CaptionRenderer {
   public calcHorizontalDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) {
+    // var metrics = this.metricsTable.getMetrics(char, this.fontSize);
+    // var position = new CharRenderingPosition({
+    //   char: char,
+    //   startX: startX,
+    //   startY: startY + metrics.hby + metrics.vby,
+    //   width: metrics.ha,
+    //   height: metrics.va
+    // });
   }
 
-  // /**
-  // * 文字を書く
-  // * @return {CharRenderingPosition} レンダリングした文字の位置情報を返す
-  // */
-  // private drawChar(char, startX, startY) : CharRenderingPosition {
-  //   var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-  //   var position = new CharRenderingPosition({
-  //     char: char,
-  //     startX: startX,
-  //     startY: startY + metrics.hby + metrics.vby,
-  //     width: metrics.ha,
-  //     height: metrics.va
-  //   });
-  //
-  //   this.canvas.drawChar(
-  //     char, this.fontName, this.fontSize,
-  //     position.startX, position.startY
-  //   );
-  //
-  //   return position;
-  // }
-  //
-  // /**
-  // * 横書き用 文字の外枠補助線を描画する
-  // */
-  // private drawHorizontalCharOuterFrame(char, startX, startY) {
-  //   var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-  //   if (metrics) {
-  //     this.canvas.drawRect(
-  //       startX, startY,
-  //       metrics.ha, metrics.va,
-  //       this.outerFrameColor, this.projectLineWidth
-  //     );
-  //   }
-  // }
-  //
-  // /**
-  // * 横書き用 文字のバウンディングボックスを描画する
-  // */
-  // private drawHorizontalCharBoundingBox(char, startX, startY) {
-  //   var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-  //   if (metrics) {
-  //     this.canvas.drawRect(
-  //       startX + metrics.hbx, startY + metrics.vby,
-  //       metrics.width, metrics.height,
-  //       this.boundingBoxColor, this.projectLineWidth
-  //     );
-  //   }
-  // }
+  private renderChar(char: CaptionChar) {
+    this.canvas.drawChar(
+      char.char, this.fontName, this.fontSize,
+      char.startX, char.startY
+    );
+  }
+
+  /**
+  * 文字外枠を描画
+  */
+  private renderCharOuterFrame(char: CaptionChar) {
+    this.canvas.drawRect(
+      char.startX, char.startY,
+      char.metrics.ha, char.metrics.va,
+      this.outerFrameColor, this.projectLineWidth
+    );
+  }
+
+  /**
+  * 文字のバウンディングボックスを描画する
+  */
+  private renderCharBoundingBox(char: CaptionChar) {
+    this.canvas.drawRect(
+      char.startX + char.metrics.hbx, char.startY + char.metrics.vby,
+      char.metrics.width, char.metrics.height,
+      this.boundingBoxColor, this.projectLineWidth
+    );
+  }
 }
