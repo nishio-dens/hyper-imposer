@@ -6,7 +6,8 @@ import { VirtualCanvas } from "./virtualCanvas";
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
   private metricsTable: MetricsTable;
-  private projectLineColor = "#0000ff";
+  private outerFrameColor= "#00ff00";
+  private boundingBoxColor = "#0000ff";
   private projectLineWidth: number = 1;
 
   constructor(canvas: VirtualCanvas, metricsTable: MetricsTable) {
@@ -14,12 +15,30 @@ export class CaptionRenderer {
     this.metricsTable = metricsTable;
   }
 
-  public drawHorizontalCharProjectionLine(char, startX, startY) {
+  /**
+  * 文字の外枠補助線を描画する
+  */
+  public drawHorizontalCharOuterFrame(char, startX, startY) {
     var metrics = this.metricsTable.getMetrics(char);
     if (metrics) {
       this.canvas.drawRect(
-        startX, startY, metrics.width, metrics.height,
-        this.projectLineColor, this.projectLineWidth
+        startX, startY,
+        metrics.ha, metrics.va,
+        this.outerFrameColor, this.projectLineWidth
+      );
+    }
+  }
+
+  /**
+  * 文字のバウンディングボックスを描画する
+  */
+  public drawHorizontalCharBoundingBox(char, startX, startY) {
+    var metrics = this.metricsTable.getMetrics(char);
+    if (metrics) {
+      this.canvas.drawRect(
+        startX + metrics.hbx, startY + metrics.vby,
+        metrics.width, metrics.height,
+        this.boundingBoxColor, this.projectLineWidth
       );
     }
   }
