@@ -7,6 +7,7 @@ import { CaptionChar } from "../captions/captionChar";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
 import { CaptionSafeZone } from "../captions/captionSafeZone";
+import { HorizontalTypeSetter } from "../captions/horizontalTypeSetter";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
@@ -17,15 +18,20 @@ export class CaptionRenderer {
   private projectLineWidth: number = 1;
   private fontName: string;
   private fontSize: number;
-
-  // 基準文字 この文字の大きさを元に日本語の外枠を決める
-  private baseJapaneseCharacter : string = "国";
-  private baseJapaneseCharacterSize : number;
+  private horizontalTypeSetter: HorizontalTypeSetter;
 
   private renderingTexts: any;
 
   // TODO: サイズ変更に対応
   constructor(
+    canvas: VirtualCanvas, metricsTable: MetricsTable,
+    captionSafeZone: CaptionSafeZone,
+    fontName: string, fontSize: number
+  ) {
+    this.initialize(canvas, metricsTable, captionSafeZone, fontName, fontSize);
+  }
+
+  public initialize(
     canvas: VirtualCanvas, metricsTable: MetricsTable,
     captionSafeZone: CaptionSafeZone,
     fontName: string, fontSize: number
@@ -37,7 +43,11 @@ export class CaptionRenderer {
     this.fontName = fontName;
     this.fontSize = fontSize;
 
-    this.calcBaseCharMetrics();
+    this.horizontalTypeSetter = new HorizontalTypeSetter(
+      this.captionSafeZone,
+      this.fontSize,
+      this.metricsTable
+    );
   }
 
   public addCaptionText(
@@ -50,7 +60,8 @@ export class CaptionRenderer {
 
     // TODO: 複数行対応
     // TODO: Align, Positionに対応
-    this.renderingTexts[position] = this.calcHorizontalDrawingPosition(text, position, alignment);
+    this.renderingTexts[position] = this.horizontalTypeSetter
+      .calcDrawingPosition(text, position, alignment);
   }
 
   /**
@@ -76,67 +87,8 @@ export class CaptionRenderer {
   }
 
   /**
-  * 日本語文字外枠を計算
+  * 文字を描画
   */
-  private calcBaseCharMetrics() {
-    var m = this.metricsTable.getMetrics(this.baseJapaneseCharacter, this.fontSize);
-    var size = 0;
-    if (m.ha > m.va) {
-      size = m.ha;
-    } else {
-      size = m.va;
-    }
-    this.baseJapaneseCharacterSize = size;
-  }
-
-  /**
-  * 横方向字幕レンダリングのポジション計算
-  */
-  private calcHorizontalDrawingPosition(
-    text: string, position: CaptionPosition, alignment: CaptionAlignment
-  ) : CaptionChar[] {
-    var startX = 0, startY = 0;
-
-    if (position === CaptionPosition.BOTTOM_LEFT && alignment === CaptionAlignment.START) {
-      startX = this.captionSafeZone.getSafeStartX();
-      startY = this.captionSafeZone.getSafeEndY();
-    } else {
-      console.log("Not Implemented Yet");
-    }
-
-    var textMetrics = this.calcCharMetrics(text);
-    var renderText = [];
-    var currentXPosition = startX;
-    var currentYPosition = startY;
-
-    for (var i = 0; i < text.length; i++) {
-      var m : Metrics = textMetrics[i];
-      var cc  = new CaptionChar({
-        char: text[i],
-        startX: currentXPosition,
-        startY: currentYPosition - this.baseJapaneseCharacterSize,
-        charStartX: currentXPosition,
-        charStartY: currentYPosition + m.hby + m.vby - this.baseJapaneseCharacterSize,
-        width: m.ha,
-        height: m.va,
-        metrics: m
-      });
-      renderText.push(cc);
-
-      currentXPosition += m.ha;
-    }
-
-    return renderText;
-  }
-
-  private calcCharMetrics(text: string) : Metrics[] {
-    var metrics : Metrics[] = [];
-    for (var i = 0; i < text.length; i++) {
-      metrics.push(this.metricsTable.getMetrics(text[i], this.fontSize));
-    }
-    return metrics;
-  }
-
   private renderChar(char: CaptionChar) {
     this.canvas.drawChar(
       char.char, this.fontName, this.fontSize,
