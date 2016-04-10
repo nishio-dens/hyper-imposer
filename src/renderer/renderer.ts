@@ -34,7 +34,7 @@ export class Renderer {
     );
 
     this.metricsTable = new MetricsTable();
-    this.metricsTable.initializeMetrics(fontMetricsCsv);
+    this.metricsTable.initializeMetrics(fontMetricsCsv, this.canvas);
 
     this.captionRenderer = new CaptionRenderer(
       this.canvas, this.metricsTable, fontName, fontSize

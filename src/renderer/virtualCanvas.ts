@@ -99,14 +99,18 @@ export class VirtualCanvas {
 
   public virtualXToX(point: number): number {
     var scale: number = this.canvasWidth / (this.virtualCanvasWidth - (this.canvasOffsetX * 2));
-    console.log("X scale" + scale);
     return point * scale;
   }
 
   public virtualYToY(point: number): number {
     var scale: number = this.canvasHeight / (this.virtualCanvasHeight - (this.canvasOffsetY * 2));
-    console.log("Y scale" + scale);
     return point * scale;
+  }
+
+  public getVirtualCanvasScale() : number {
+    // X と Y 方向のスケールが違っていてはダメ
+    var scale: number = (this.virtualCanvasWidth - (this.canvasOffsetX * 2)) / this.canvasWidth;
+    return scale;
   }
 
   public clear() {

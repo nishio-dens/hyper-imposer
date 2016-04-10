@@ -1,12 +1,17 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import { Metrics } from "./metrics";
+import { VirtualCanvas } from "../renderer/virtualCanvas";
 
 export class MetricsTable {
   private table : { [key: number] : Metrics };
+  private virtualCanvas: VirtualCanvas;
   private fontResolution;
 
-  public initializeMetrics(metricsCsv, fontResolution: number = 1000) {
+  public initializeMetrics(
+    metricsCsv, virtualCanvas: VirtualCanvas, fontResolution: number = 1000
+  ) {
+    this.virtualCanvas = virtualCanvas;
     this.fontResolution = fontResolution;
 
     this.table = {};
@@ -33,10 +38,10 @@ export class MetricsTable {
     }
   }
 
-  public pixelsFromPoints(value: number, fontSize: number) {
-    return value * fontSize * 72 / (this.fontResolution * 100);
-  }
-
+  /**
+  * 文字のメトリクスを返す
+  * サイズは全てVirtualCanvasの大きさを返す
+  */
   public getMetrics(char: any, fontSize: number) : Metrics {
     var m : Metrics = this.table[char.charCodeAt()];
     return new Metrics({
@@ -54,5 +59,11 @@ export class MetricsTable {
       ha:     this.pixelsFromPoints(m.ha, fontSize),
       va:     this.pixelsFromPoints(m.va, fontSize)
     });
+  }
+
+  private pixelsFromPoints(value: number, fontSize: number) {
+    return (
+      value * fontSize * 72 / (this.fontResolution * 100)
+    ) * this.virtualCanvas.getVirtualCanvasScale();
   }
 }
