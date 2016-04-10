@@ -57,7 +57,7 @@ export class CaptionRenderer {
   * 字幕をレンダリングする
   */
   public render() {
-    for(var position in this.renderingTexts) {
+    for (var position in this.renderingTexts) {
       var ccs = this.renderingTexts[position];
       for(var i = 0; i < ccs.length; i++) {
         this.renderChar(ccs[i]);
@@ -66,7 +66,7 @@ export class CaptionRenderer {
   }
 
   public renderBoundingBox() {
-    for(var position in this.renderingTexts) {
+    for (var position in this.renderingTexts) {
       var ccs = this.renderingTexts[position];
       for(var i = 0; i < ccs.length; i++) {
         this.renderCharBoundingBox(ccs[i]);
