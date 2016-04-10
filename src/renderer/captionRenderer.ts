@@ -8,6 +8,7 @@ import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
 import { CaptionSafeZone } from "../captions/captionSafeZone";
 import { HorizontalTypeSetter } from "../captions/horizontalTypeSetter";
+import { VerticalTypeSetter } from "../captions/verticalTypeSetter";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
@@ -18,11 +19,11 @@ export class CaptionRenderer {
   private projectLineWidth: number = 1;
   private fontName: string;
   private fontSize: number;
+  private verticalTypeSetter: VerticalTypeSetter;
   private horizontalTypeSetter: HorizontalTypeSetter;
 
   private renderingTexts: any;
 
-  // TODO: サイズ変更に対応
   constructor(
     canvas: VirtualCanvas, metricsTable: MetricsTable,
     captionSafeZone: CaptionSafeZone,
@@ -48,6 +49,11 @@ export class CaptionRenderer {
       this.fontSize,
       this.metricsTable
     );
+    this.verticalTypeSetter = new VerticalTypeSetter(
+      this.captionSafeZone,
+      this.fontSize,
+      this.metricsTable
+    );
   }
 
   public addCaptionText(
@@ -58,10 +64,13 @@ export class CaptionRenderer {
       this.renderingTexts = {};
     }
 
-    // TODO: 複数行対応
-    // TODO: Align, Positionに対応
-    this.renderingTexts[position] = this.horizontalTypeSetter
-      .calcDrawingPosition(text, position, alignment);
+    if (virtical) {
+      this.renderingTexts[position] = this.verticalTypeSetter
+        .calcDrawingPosition(text, position, alignment);
+    } else {
+      this.renderingTexts[position] = this.horizontalTypeSetter
+        .calcDrawingPosition(text, position, alignment);
+    }
   }
 
   /**
@@ -70,7 +79,7 @@ export class CaptionRenderer {
   public render() {
     for (var position in this.renderingTexts) {
       var ccs = this.renderingTexts[position];
-      for(var i = 0; i < ccs.length; i++) {
+      for (var i = 0; i < ccs.length; i++) {
         this.renderChar(ccs[i]);
       }
     }
@@ -79,7 +88,7 @@ export class CaptionRenderer {
   public renderBoundingBox() {
     for (var position in this.renderingTexts) {
       var ccs = this.renderingTexts[position];
-      for(var i = 0; i < ccs.length; i++) {
+      for (var i = 0; i < ccs.length; i++) {
         this.renderCharBoundingBox(ccs[i]);
         this.renderCharOuterFrame(ccs[i]);
       }
