@@ -21,16 +21,20 @@ export class VerticalTypeSetter extends TypeSetter {
   public calcDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) : CaptionChar[] {
-    var startX = 0, startY = 0;
-
-    if (position === CaptionPosition.TOP_RIGHT && alignment === CaptionAlignment.START) {
-      startX = this.captionSafeZone.getSafeEndX();
-      startY = this.captionSafeZone.getSafeStartY();
-    } else {
-      console.log("Not Implemented Yet");
-    }
-
+    // TODO: 縦書き用文字置換対応
+    // TODO: 回転文字対応
+    // TODO: テキストタグ対応 <G>23</G>や<RB VALUE="あ">嗚</RB>など
+    // TODO: 複数行対応
+    // TODO: ルビ
+    // TODO: 組み文字
+    // TODO: 先頭「 等の役物位置調整対応
     var textMetrics = this.calcCharMetrics(text);
+
+    var startPosition = this.calcOneLineInitialPoint(
+      textMetrics, position, alignment
+    );
+    var startX = startPosition.x, startY = startPosition.y;
+
     var renderText = [];
     var currentXPosition = startX;
     var currentYPosition = startY;
@@ -54,5 +58,28 @@ export class VerticalTypeSetter extends TypeSetter {
     }
 
     return renderText;
+  }
+
+  /**
+  * レンダリング開始ポイントを計算して返す
+  * テキストは1行のみ対応
+  */
+  private calcOneLineInitialPoint(
+    textMetrics, position: CaptionPosition, alignment: CaptionAlignment,
+    xOffset: number = 0, yOffset: number = 0
+  ) {
+    var startX = 0, startY = 0;
+
+    if (position === CaptionPosition.TOP_RIGHT && alignment === CaptionAlignment.START) {
+      startX = this.captionSafeZone.getSafeEndX() + xOffset;
+      startY = this.captionSafeZone.getSafeStartY() + yOffset;
+    } else {
+      console.log("Not Implemented Yet");
+    }
+
+    return {
+      x: startX,
+      y: startY
+    };
   }
 }
