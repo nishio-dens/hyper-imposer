@@ -11,8 +11,9 @@
   "files": [
     "./src/bootstrap.ts",
     "./src/captions/captionAlignment.ts",
+    "./src/captions/captionChar.ts",
     "./src/captions/captionPosition.ts",
-    "./src/captions/charRenderingPosition.ts",
+    "./src/captions/captionSafeZone.ts",
     "./src/fonts/metrics.ts",
     "./src/fonts/metricsTable.ts",
     "./src/renderer/aspectRatio.ts",

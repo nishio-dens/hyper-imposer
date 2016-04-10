@@ -2,7 +2,7 @@
 
 import { Metrics } from "../fonts/metrics";
 
-export class CharRenderingPosition {
+export class CaptionChar {
   private _char: string;
   private _startX: number;
   private _startY: number;

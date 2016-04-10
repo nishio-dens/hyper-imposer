@@ -8,12 +8,14 @@ import { CaptionRenderer } from "./captionRenderer";
 import { CaptionSafeZoneRenderer } from "./captionSafeZoneRenderer";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
+import { CaptionSafeZone } from "../captions/captionSafeZone";
 
 export class Renderer {
   // canvas
   private canvas: VirtualCanvas;
   private metricsTable: MetricsTable;
   private captionRenderer: CaptionRenderer;
+  private captionSafeZone: CaptionSafeZone;
   private captionSafeZoneRenderer: CaptionSafeZoneRenderer;
   private isDebug: boolean;
 
@@ -40,11 +42,13 @@ export class Renderer {
     this.metricsTable = new MetricsTable();
     this.metricsTable.initializeMetrics(fontMetricsCsv, this.canvas);
 
+    this.captionSafeZone = new CaptionSafeZone(this.canvas);
+
     this.captionRenderer = new CaptionRenderer(
       this.canvas, this.metricsTable, fontName, fontSize
     );
 
-    this.captionSafeZoneRenderer = new CaptionSafeZoneRenderer(this.canvas);
+    this.captionSafeZoneRenderer = new CaptionSafeZoneRenderer(this.canvas, this.captionSafeZone);
   }
 
   public setDebugMode(isDebug: boolean) {

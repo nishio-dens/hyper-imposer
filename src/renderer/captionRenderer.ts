@@ -2,7 +2,7 @@
 
 import { MetricsTable } from "../fonts/metricsTable";
 import { VirtualCanvas } from "./virtualCanvas";
-import { CharRenderingPosition } from "../captions/charRenderingPosition";
+import { CaptionChar } from "../captions/captionChar";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
 
@@ -44,70 +44,69 @@ export class CaptionRenderer {
   */
   public render() {
     var char = "う";
-    this.drawHorizontalCharBoundingBox(char, 10000, 1000);
-    this.drawHorizontalCharOuterFrame(char, 10000, 1000);
-    this.drawChar(char, 10000, 1000);
+    // this.drawHorizontalCharBoundingBox(char, 10000, 1000);
+    // this.drawHorizontalCharOuterFrame(char, 10000, 1000);
+    // this.drawChar(char, 10000, 1000);
   }
 
-  /**
-  * 字幕の外枠、バウンディングボックス補助線をレンダリングする
-  */
   public renderBoundingBox() {
   }
 
   /**
-  * 横方向に文字を書く
+  * 横方向字幕レンダリングのポジション計算
   */
-  private drawHorizontalText(text, startX, startY) {
+  public calcHorizontalDrawingPosition(
+    text: string, position: CaptionPosition, alignment: CaptionAlignment
+  ) {
   }
 
-  /**
-  * 文字を書く
-  * @return {CharRenderingPosition} レンダリングした文字の位置情報を返す
-  */
-  private drawChar(char, startX, startY) : CharRenderingPosition {
-    var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-    var position = new CharRenderingPosition({
-      char: char,
-      startX: startX,
-      startY: startY + metrics.hby + metrics.vby,
-      width: metrics.ha,
-      height: metrics.va
-    });
-
-    this.canvas.drawChar(
-      char, this.fontName, this.fontSize,
-      position.startX, position.startY
-    );
-
-    return position;
-  }
-
-  /**
-  * 横書き用 文字の外枠補助線を描画する
-  */
-  private drawHorizontalCharOuterFrame(char, startX, startY) {
-    var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-    if (metrics) {
-      this.canvas.drawRect(
-        startX, startY,
-        metrics.ha, metrics.va,
-        this.outerFrameColor, this.projectLineWidth
-      );
-    }
-  }
-
-  /**
-  * 横書き用 文字のバウンディングボックスを描画する
-  */
-  private drawHorizontalCharBoundingBox(char, startX, startY) {
-    var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-    if (metrics) {
-      this.canvas.drawRect(
-        startX + metrics.hbx, startY + metrics.vby,
-        metrics.width, metrics.height,
-        this.boundingBoxColor, this.projectLineWidth
-      );
-    }
-  }
+  // /**
+  // * 文字を書く
+  // * @return {CharRenderingPosition} レンダリングした文字の位置情報を返す
+  // */
+  // private drawChar(char, startX, startY) : CharRenderingPosition {
+  //   var metrics = this.metricsTable.getMetrics(char, this.fontSize);
+  //   var position = new CharRenderingPosition({
+  //     char: char,
+  //     startX: startX,
+  //     startY: startY + metrics.hby + metrics.vby,
+  //     width: metrics.ha,
+  //     height: metrics.va
+  //   });
+  //
+  //   this.canvas.drawChar(
+  //     char, this.fontName, this.fontSize,
+  //     position.startX, position.startY
+  //   );
+  //
+  //   return position;
+  // }
+  //
+  // /**
+  // * 横書き用 文字の外枠補助線を描画する
+  // */
+  // private drawHorizontalCharOuterFrame(char, startX, startY) {
+  //   var metrics = this.metricsTable.getMetrics(char, this.fontSize);
+  //   if (metrics) {
+  //     this.canvas.drawRect(
+  //       startX, startY,
+  //       metrics.ha, metrics.va,
+  //       this.outerFrameColor, this.projectLineWidth
+  //     );
+  //   }
+  // }
+  //
+  // /**
+  // * 横書き用 文字のバウンディングボックスを描画する
+  // */
+  // private drawHorizontalCharBoundingBox(char, startX, startY) {
+  //   var metrics = this.metricsTable.getMetrics(char, this.fontSize);
+  //   if (metrics) {
+  //     this.canvas.drawRect(
+  //       startX + metrics.hbx, startY + metrics.vby,
+  //       metrics.width, metrics.height,
+  //       this.boundingBoxColor, this.projectLineWidth
+  //     );
+  //   }
+  // }
 }
