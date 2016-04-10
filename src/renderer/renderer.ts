@@ -5,12 +5,14 @@ import { VirtualCanvasSize } from "./virtualCanvasSize";
 import { VirtualCanvas } from "./virtualCanvas";
 import { MetricsTable } from "../fonts/metricsTable";
 import { CaptionRenderer } from "./captionRenderer";
+import { CaptionSafeZoneRenderer } from "./captionSafeZoneRenderer";
 
 export class Renderer {
   // canvas
   private canvas: VirtualCanvas;
   private metricsTable: MetricsTable;
   private captionRenderer: CaptionRenderer;
+  private captionSafeZoneRenderer: CaptionSafeZoneRenderer;
   private isDebug: boolean;
 
   private virtualCanvasWidth: number;
@@ -39,6 +41,8 @@ export class Renderer {
     this.captionRenderer = new CaptionRenderer(
       this.canvas, this.metricsTable, fontName, fontSize
     );
+
+    this.captionSafeZoneRenderer = new CaptionSafeZoneRenderer(this.canvas);
   }
 
   public setDebugMode(isDebug: boolean) {
@@ -55,7 +59,10 @@ export class Renderer {
 
   public render() {
     var actionTime: number = 0;
-    if (this.isDebug) { actionTime = new Date().getTime(); }
+    if (this.isDebug) {
+      actionTime = new Date().getTime();
+      this.captionSafeZoneRenderer.drawSafeZone();
+    }
 
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
     var char = "う";

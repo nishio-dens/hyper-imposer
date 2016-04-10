@@ -113,6 +113,14 @@ export class VirtualCanvas {
     return scale;
   }
 
+  public getVirtualCanvasWidth(): number {
+    return this.virtualCanvasWidth;
+  }
+
+  public getVirtualCanvasHeight(): number {
+    return this.virtualCanvasHeight;
+  }
+
   public clear() {
     var ctx = this.getCanvasContext();
     ctx.clearRect(0, 0, this.canvasWidth + 100, this.canvasHeight + 100);
