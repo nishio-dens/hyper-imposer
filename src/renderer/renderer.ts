@@ -6,6 +6,8 @@ import { VirtualCanvas } from "./virtualCanvas";
 import { MetricsTable } from "../fonts/metricsTable";
 import { CaptionRenderer } from "./captionRenderer";
 import { CaptionSafeZoneRenderer } from "./captionSafeZoneRenderer";
+import { CaptionAlignment } from "../captions/captionAlignment";
+import { CaptionPosition } from "../captions/captionPosition";
 
 export class Renderer {
   // canvas
@@ -66,8 +68,12 @@ export class Renderer {
 
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
 
-    this.captionRenderer.addCaptionText("皆さん、ABCこんにちは。", 1, 1, false, false);
-    this.captionRenderer.addCaptionText("縦書きは、ABCこちらです。", 1, 1, true, true);
+    this.captionRenderer.addCaptionText(
+      "皆さん、ABCこんにちは。", CaptionPosition.BOTTOM_CENTER, CaptionAlignment.CENTER, false, true
+    );
+    this.captionRenderer.addCaptionText(
+      "縦書きは、ABCこちらです。", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+    );
     this.captionRenderer.render();
 
     if (this.isDebug) {

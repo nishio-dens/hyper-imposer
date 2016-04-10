@@ -3,6 +3,8 @@
 import { MetricsTable } from "../fonts/metricsTable";
 import { VirtualCanvas } from "./virtualCanvas";
 import { CharRenderingPosition } from "../captions/charRenderingPosition";
+import { CaptionAlignment } from "../captions/captionAlignment";
+import { CaptionPosition } from "../captions/captionPosition";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
@@ -25,7 +27,7 @@ export class CaptionRenderer {
   }
 
   public addCaptionText(
-    text: string, position, alignment,
+    text: string, position: CaptionPosition, alignment: CaptionAlignment,
     virtical: boolean = false, refresh: boolean = true
   ) {
   }
