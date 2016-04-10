@@ -15,6 +15,8 @@ export class CaptionRenderer {
   private fontName: string;
   private fontSize: number;
 
+  private renderingTexts: any;
+
   constructor(
     canvas: VirtualCanvas, metricsTable: MetricsTable,
     fontName: string, fontSize: number
@@ -30,6 +32,11 @@ export class CaptionRenderer {
     text: string, position: CaptionPosition, alignment: CaptionAlignment,
     virtical: boolean = false, refresh: boolean = true
   ) {
+    if (refresh) {
+      this.renderingTexts = {};
+    }
+
+    // TODO: 追加
   }
 
   /**
