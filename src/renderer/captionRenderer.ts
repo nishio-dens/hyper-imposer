@@ -2,6 +2,7 @@
 
 import { MetricsTable } from "../fonts/metricsTable";
 import { VirtualCanvas } from "./virtualCanvas";
+import { CharRenderingPosition } from "./charRenderingPosition";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
@@ -23,23 +24,60 @@ export class CaptionRenderer {
     this.fontSize = fontSize;
   }
 
+  public addCaptionText(
+    text: string, position, alignment,
+    virtical: boolean = false, refresh: boolean = true
+  ) {
+  }
+
   /**
-  * 横書き用 横並びの文字を書く
-  * @return {number} レンダリングした文字の横送り幅を返す
+  * 字幕をレンダリングする
   */
-  public drawHorizontalChar(char, startX, startY) : number {
+  public render() {
+    var char = "う";
+    this.drawHorizontalCharBoundingBox(char, 10000, 1000);
+    this.drawHorizontalCharOuterFrame(char, 10000, 1000);
+    this.drawChar(char, 10000, 1000);
+  }
+
+  /**
+  * 字幕の外枠、バウンディングボックス補助線をレンダリングする
+  */
+  public renderBoundingBox() {
+  }
+
+  /**
+  * 横方向に文字を書く
+  */
+  private drawHorizontalText(text, startX, startY) {
+  }
+
+  /**
+  * 文字を書く
+  * @return {CharRenderingPosition} レンダリングした文字の位置情報を返す
+  */
+  private drawChar(char, startX, startY) : CharRenderingPosition {
     var metrics = this.metricsTable.getMetrics(char, this.fontSize);
+    var position = new CharRenderingPosition({
+      char: char,
+      startX: startX,
+      startY: startY + metrics.hby + metrics.vby,
+      width: metrics.ha,
+      height: metrics.va
+    });
+
     this.canvas.drawChar(
       char, this.fontName, this.fontSize,
-      startX, startY + metrics.hby + metrics.vby
+      position.startX, position.startY
     );
-    return metrics.ha;
+
+    return position;
   }
 
   /**
   * 横書き用 文字の外枠補助線を描画する
   */
-  public drawHorizontalCharOuterFrame(char, startX, startY) {
+  private drawHorizontalCharOuterFrame(char, startX, startY) {
     var metrics = this.metricsTable.getMetrics(char, this.fontSize);
     if (metrics) {
       this.canvas.drawRect(
@@ -53,7 +91,7 @@ export class CaptionRenderer {
   /**
   * 横書き用 文字のバウンディングボックスを描画する
   */
-  public drawHorizontalCharBoundingBox(char, startX, startY) {
+  private drawHorizontalCharBoundingBox(char, startX, startY) {
     var metrics = this.metricsTable.getMetrics(char, this.fontSize);
     if (metrics) {
       this.canvas.drawRect(

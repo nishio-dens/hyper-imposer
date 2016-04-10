@@ -65,12 +65,13 @@ export class Renderer {
     }
 
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
-    var char = "う";
-    this.captionRenderer.drawHorizontalCharBoundingBox(char, 10000, 1000);
-    this.captionRenderer.drawHorizontalCharOuterFrame(char, 10000, 1000);
-    this.captionRenderer.drawHorizontalChar(char, 10000, 1000);
+
+    this.captionRenderer.addCaptionText("皆さん、ABCこんにちは。", 1, 1, false, false);
+    this.captionRenderer.addCaptionText("縦書きは、ABCこちらです。", 1, 1, true, true);
+    this.captionRenderer.render();
 
     if (this.isDebug) {
+      this.captionRenderer.renderBoundingBox();
       var time: number = new Date().getTime() - actionTime;
       console.log("Rendering " + time + "ms");
     }
