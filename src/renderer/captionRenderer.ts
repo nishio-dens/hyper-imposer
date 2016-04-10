@@ -12,11 +12,15 @@ export class CaptionRenderer {
   private canvas: VirtualCanvas;
   private metricsTable: MetricsTable;
   private captionSafeZone: CaptionSafeZone;
-  private outerFrameColor= "#00ff00";
+  private outerFrameColor = "#00ff00";
   private boundingBoxColor = "#0000ff";
   private projectLineWidth: number = 1;
   private fontName: string;
   private fontSize: number;
+
+  // 基準文字 この文字の大きさを元に日本語の外枠を決める
+  private baseJapaneseCharacter : string = "国";
+  private baseJapaneseCharacterSize : number;
 
   private renderingTexts: any;
 
@@ -31,6 +35,8 @@ export class CaptionRenderer {
 
     this.fontName = fontName;
     this.fontSize = fontSize;
+
+    this.calcBaseCharMetrics();
   }
 
   public addCaptionText(
@@ -41,28 +47,53 @@ export class CaptionRenderer {
       this.renderingTexts = {};
     }
 
-    // TODO: 追加
+    // TODO: 複数行対応
+    // TODO: Align, Positionに対応
+    this.renderingTexts[position] = this.calcHorizontalDrawingPosition(text, position, alignment);
   }
 
   /**
   * 字幕をレンダリングする
   */
   public render() {
-    var char = "う";
-    // this.drawHorizontalCharBoundingBox(char, 10000, 1000);
-    // this.drawHorizontalCharOuterFrame(char, 10000, 1000);
-    // this.drawChar(char, 10000, 1000);
+    for(var position in this.renderingTexts) {
+      var ccs = this.renderingTexts[position];
+      for(var i = 0; i < ccs.length; i++) {
+        this.renderChar(ccs[i]);
+      }
+    }
   }
 
   public renderBoundingBox() {
+    for(var position in this.renderingTexts) {
+      var ccs = this.renderingTexts[position];
+      for(var i = 0; i < ccs.length; i++) {
+        this.renderCharBoundingBox(ccs[i]);
+        this.renderCharOuterFrame(ccs[i]);
+      }
+    }
+  }
+
+  /**
+  * 日本語文字外枠を計算
+  */
+  private calcBaseCharMetrics() {
+    var m = this.metricsTable.getMetrics(this.baseJapaneseCharacter, this.fontSize);
+    var size = 0;
+    if (m.ha > m.va) {
+      size = m.ha;
+    } else {
+      size = m.va;
+    }
+    this.baseJapaneseCharacterSize = size;
   }
 
   /**
   * 横方向字幕レンダリングのポジション計算
   */
-  public calcHorizontalDrawingPosition(
+  private calcHorizontalDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
-  ) {
+  ) : CaptionChar[] {
     var startX = 0, startY = 0;
 
     if (position === CaptionPosition.BOTTOM_LEFT && alignment === CaptionAlignment.START) {
@@ -72,17 +103,27 @@ export class CaptionRenderer {
       console.log("Not Implemented Yet");
     }
 
-    for (var i = 0; i < text.length; i++) {
+    var textMetrics = this.calcCharMetrics(text);
+    var renderText = [];
+    var currentXPosition = startX;
+    var currentYPosition = startY;
 
+    for (var i = 0; i < text.length; i++) {
+      var m : Metrics = textMetrics[i];
+      var cc  = new CaptionChar({
+        char: text[i],
+        startX: currentXPosition,
+        startY: currentYPosition + m.hby + m.vby - this.baseJapaneseCharacterSize,
+        width: m.ha,
+        height: m.va,
+        metrics: m
+      });
+      renderText.push(cc);
+
+      currentXPosition += m.ha;
     }
-    // var metrics = this.metricsTable.getMetrics(char, this.fontSize);
-    // var position = new CharRenderingPosition({
-    //   char: char,
-    //   startX: startX,
-    //   startY: startY + metrics.hby + metrics.vby,
-    //   width: metrics.ha,
-    //   height: metrics.va
-    // });
+
+    return renderText;
   }
 
   private calcCharMetrics(text: string) : Metrics[] {
