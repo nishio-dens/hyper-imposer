@@ -20,8 +20,14 @@
   </head>
   <body>
     <canvas id="captionCanvas" width="960" height="540"></canvas>
-
+    <br>
     <button onclick="window.clear()">Clear</button>
+    <button onclick="window.redraw()">Redraw</button>
+    <button onclick="window.changeCanvasSize(1920, 1080)">Size1920x1080</button>
+    <button onclick="window.changeCanvasSize(960, 540)">Size960x540</button>
+    <button onclick="window.changeCanvasSize(480, 270)">Size480x270</button>
+    <button onclick="window.changeCanvasSize(704, 396)">Size704x396</button>
+    <button onclick="window.changeCanvasSize(640, 480)">Size640x480</button>
     <button onclick="window.redraw()">Redraw</button>
 
     <script>
@@ -46,6 +52,12 @@
 
           window.redraw = function redraw() {
             renderer.clear();
+            renderer.render();
+          }
+
+          window.changeCanvasSize = function(width, height) {
+            renderer.clear();
+            renderer.setCanvasSize(width, height);
             renderer.render();
           }
         }
