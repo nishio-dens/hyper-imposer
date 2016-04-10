@@ -4,11 +4,13 @@ import { AspectRatio } from "./aspectRatio";
 import { VirtualCanvasSize } from "./virtualCanvasSize";
 import { VirtualCanvas } from "./virtualCanvas";
 import { MetricsTable } from "../fonts/metricsTable";
+import { CaptionRenderer } from "./captionRenderer";
 
 export class Renderer {
   // canvas
   private canvas: VirtualCanvas;
   private metricsTable: MetricsTable;
+  private captionRenderer: CaptionRenderer;
   private isDebug: boolean;
 
   private virtualCanvasWidth: number;
@@ -32,6 +34,8 @@ export class Renderer {
 
     this.metricsTable = new MetricsTable();
     this.metricsTable.initializeMetrics(fontMetricsCsv);
+
+    this.captionRenderer = new CaptionRenderer(this.canvas, this.metricsTable);
   }
 
   public setDebugMode(isDebug: boolean) {
@@ -50,8 +54,8 @@ export class Renderer {
     var actionTime: number = 0;
     if (this.isDebug) { actionTime = new Date().getTime(); }
 
-    this.canvas.drawLine(10, 10, 10000, 10000, "#FF0000", 1);
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
+    this.captionRenderer.drawHorizontalCharProjectionLine('お', 10000, 1000);
 
     if (this.isDebug) {
       var time: number = new Date().getTime() - actionTime;

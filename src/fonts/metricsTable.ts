@@ -3,7 +3,7 @@
 import { Metrics } from "./metrics";
 
 export class MetricsTable {
-  private table;
+  private table : { [key: number] : Metrics };
 
   public initializeMetrics(metricsCsv) {
     this.table = {};
@@ -33,5 +33,9 @@ export class MetricsTable {
   public pixelsFromPoints(value: number) {
     // TODO: fixme
     return value;
+  }
+
+  public getMetrics(char) : Metrics {
+    return <Metrics>this.table[char.charCodeAt()];
   }
 }

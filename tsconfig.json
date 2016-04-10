@@ -13,6 +13,7 @@
     "./src/fonts/metrics.ts",
     "./src/fonts/metricsTable.ts",
     "./src/renderer/aspectRatio.ts",
+    "./src/renderer/captionRenderer.ts",
     "./src/renderer/renderer.ts",
     "./src/renderer/virtualCanvas.ts",
     "./src/renderer/virtualCanvasSize.ts"
