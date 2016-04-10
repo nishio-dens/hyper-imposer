@@ -18,6 +18,8 @@ export class Renderer {
   private captionSafeZone: CaptionSafeZone;
   private captionSafeZoneRenderer: CaptionSafeZoneRenderer;
   private isDebug: boolean;
+  private fontName: string;
+  private fontSize: number;
 
   private virtualCanvasWidth: number;
   private virtualCanvasHeight: number;
@@ -44,11 +46,16 @@ export class Renderer {
 
     this.captionSafeZone = new CaptionSafeZone(this.canvas);
 
-    this.captionRenderer = new CaptionRenderer(
-      this.canvas, this.metricsTable, this.captionSafeZone, fontName, fontSize
-    );
-
+    this.fontName = fontName;
+    this.fontSize = fontSize;
+    this.initializeTypeSetter();
     this.captionSafeZoneRenderer = new CaptionSafeZoneRenderer(this.canvas, this.captionSafeZone);
+  }
+
+  public initializeTypeSetter() {
+    this.captionRenderer = new CaptionRenderer(
+      this.canvas, this.metricsTable, this.captionSafeZone, this.fontName, this.fontSize
+    );
   }
 
   public setDebugMode(isDebug: boolean) {
@@ -57,6 +64,7 @@ export class Renderer {
 
   public setCanvasSize(canvasWidth: number, canvasHeight: number) {
     this.canvas.setCanvasSize(canvasWidth, canvasHeight);
+    this.initializeTypeSetter();
   }
 
   public clear() {
