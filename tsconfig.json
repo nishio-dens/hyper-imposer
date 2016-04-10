@@ -15,6 +15,7 @@
     "./src/captions/captionPosition.ts",
     "./src/captions/captionSafeZone.ts",
     "./src/captions/horizontalTypeSetter.ts",
+    "./src/captions/typeSetter.ts",
     "./src/fonts/metrics.ts",
     "./src/fonts/metricsTable.ts",
     "./src/renderer/aspectRatio.ts",

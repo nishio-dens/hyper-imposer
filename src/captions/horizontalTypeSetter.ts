@@ -6,52 +6,13 @@ import { CaptionChar } from "../captions/captionChar";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
 import { CaptionSafeZone } from "../captions/captionSafeZone";
+import { TypeSetter } from "../captions/typeSetter";
 
-export class HorizontalTypeSetter {
-  private captionSafeZone: CaptionSafeZone;
-  private metricsTable: MetricsTable;
-  private fontSize: number;
-
-  // 基準文字 この文字の大きさを元に日本語の外枠を決める
-  private baseJapaneseCharacter : string = "国";
-  private baseJapaneseCharacterSize : number;
-
+export class HorizontalTypeSetter extends TypeSetter {
   constructor(captionSafeZone: CaptionSafeZone, fontSize: number, metricsTable: MetricsTable) {
-    this.initialize(captionSafeZone, fontSize, metricsTable);
-  }
-
-  public initialize(
-    captionSafeZone: CaptionSafeZone,
-    fontSize: number,
-    metricsTable: MetricsTable
-  ) {
-    this.captionSafeZone = captionSafeZone;
-    this.fontSize = fontSize;
-    this.metricsTable = metricsTable;
-
-    this.calcBaseCharMetrics();
-  }
-
-  /**
-  * 日本語文字外枠を計算
-  */
-  private calcBaseCharMetrics() {
-    var m = this.metricsTable.getMetrics(this.baseJapaneseCharacter, this.fontSize);
-    var size = 0;
-    if (m.ha > m.va) {
-      size = m.ha;
-    } else {
-      size = m.va;
-    }
-    this.baseJapaneseCharacterSize = size;
-  }
-
-  private calcCharMetrics(text: string) : Metrics[] {
-    var metrics : Metrics[] = [];
-    for (var i = 0; i < text.length; i++) {
-      metrics.push(this.metricsTable.getMetrics(text[i], this.fontSize));
-    }
-    return metrics;
+    super(
+      captionSafeZone, fontSize, metricsTable
+    );
   }
 
   /**
