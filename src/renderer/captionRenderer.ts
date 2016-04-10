@@ -9,14 +9,22 @@ export class CaptionRenderer {
   private outerFrameColor= "#00ff00";
   private boundingBoxColor = "#0000ff";
   private projectLineWidth: number = 1;
+  private fontName: string;
+  private fontSize: number;
 
-  constructor(canvas: VirtualCanvas, metricsTable: MetricsTable) {
+  constructor(
+    canvas: VirtualCanvas, metricsTable: MetricsTable,
+    fontName: string, fontSize: number
+  ) {
     this.canvas = canvas;
     this.metricsTable = metricsTable;
+
+    this.fontName = fontName;
+    this.fontSize = fontSize;
   }
 
   /**
-  * 文字の外枠補助線を描画する
+  * 横書き用 文字の外枠補助線を描画する
   */
   public drawHorizontalCharOuterFrame(char, startX, startY) {
     var metrics = this.metricsTable.getMetrics(char);
@@ -30,7 +38,7 @@ export class CaptionRenderer {
   }
 
   /**
-  * 文字のバウンディングボックスを描画する
+  * 横書き用 文字のバウンディングボックスを描画する
   */
   public drawHorizontalCharBoundingBox(char, startX, startY) {
     var metrics = this.metricsTable.getMetrics(char);

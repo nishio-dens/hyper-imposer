@@ -97,6 +97,6 @@ export class VirtualCanvas {
 
   public clear() {
     var ctx = this.getCanvasContext();
-    ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    ctx.clearRect(0, 0, this.canvasWidth + 100, this.canvasHeight + 100);
   }
 }

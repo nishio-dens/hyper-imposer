@@ -15,9 +15,12 @@ export class Bootstrap {
   }
 
   public initializeRenderer(
-    canvasId: string, width: number, height: number, aspect: AspectRatio, metricsCsv: string
+    canvasId: string, width: number, height: number, aspect: AspectRatio,
+    fontName: string, fontSize: number, metricsCsv: string
   ) {
-    this.renderer = new Renderer(canvasId, width, height, aspect, metricsCsv);
+    this.renderer = new Renderer(
+      canvasId, width, height, aspect, fontName, fontSize, metricsCsv
+    );
     this.renderer.setDebugMode(this.isDebugMode());
 
     return this.renderer;

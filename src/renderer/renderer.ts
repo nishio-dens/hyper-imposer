@@ -18,6 +18,7 @@ export class Renderer {
 
   constructor(canvasId: string, canvasWidth: number,
               canvasHeight: number, aspectRatio: AspectRatio,
+              fontName: string, fontSize: number,
               fontMetricsCsv: string) {
     if (aspectRatio === AspectRatio.AR16_9) {
       this.virtualCanvasWidth = VirtualCanvasSize.AR16_9_WIDTH;
@@ -27,7 +28,7 @@ export class Renderer {
       this.virtualCanvasHeight = VirtualCanvasSize.AR4_3_HEIGHT;
     }
 
-    // TODO: 実際のcanvasの大きさが16:9 または 4:3 でないときは OffsetX, OffsetYを渡さなければならない
+    // TODO: 実際のcanvasの大きさが16:9 でないときは OffsetX, OffsetYを渡さなければならない
     this.canvas = new VirtualCanvas(
       canvasId, canvasWidth, canvasHeight, this.virtualCanvasWidth, this.virtualCanvasHeight
     );
@@ -35,7 +36,9 @@ export class Renderer {
     this.metricsTable = new MetricsTable();
     this.metricsTable.initializeMetrics(fontMetricsCsv);
 
-    this.captionRenderer = new CaptionRenderer(this.canvas, this.metricsTable);
+    this.captionRenderer = new CaptionRenderer(
+      this.canvas, this.metricsTable, fontName, fontSize
+    );
   }
 
   public setDebugMode(isDebug: boolean) {

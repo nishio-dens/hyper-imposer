@@ -42,7 +42,7 @@
         success: function(fontMetrics) {
           var renderer = imposer.initializeRenderer(
             "captionCanvas", width, height, HyperImposer.AspectRatio.AR16_9,
-            fontMetrics
+            "GenShinRegularP", 72, fontMetrics
           );
           renderer.render();
 
@@ -56,6 +56,10 @@
           }
 
           window.changeCanvasSize = function(width, height) {
+            var canvas = document.getElementById("captionCanvas");
+            canvas.width = width;
+            canvas.height = height;
+
             renderer.clear();
             renderer.setCanvasSize(width, height);
             renderer.render();
