@@ -75,6 +75,16 @@ export class VirtualCanvas {
     ctx.closePath();
   }
 
+  /**
+  * Baseline Center として、文字を描画する
+  */
+  public drawChar(char, fontName, fontSize, startX, startY) : void {
+    var ctx = this.getCanvasContext();
+    ctx.font = fontSize + "px " + fontName;
+    ctx.textBaseline = "center";
+    ctx.fillText(char, startX, startY);
+  }
+
   public xToVirtualX(point: number): number {
     var scale: number = (this.virtualCanvasWidth - (this.canvasOffsetX * 2)) / this.canvasWidth;
     return point * scale;

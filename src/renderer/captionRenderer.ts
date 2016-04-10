@@ -24,6 +24,19 @@ export class CaptionRenderer {
   }
 
   /**
+  * 横書き用 横並びの文字を書く
+  * @return {number} レンダリングした文字の横送り幅を返す
+  */
+  public drawHorizontalChar(char, startX, startY) : number {
+    var metrics = this.metricsTable.getMetrics(char);
+    this.canvas.drawChar(
+      char, this.fontName, this.fontSize,
+      startX, startY + metrics.hby + metrics.vby
+    );
+    return metrics.ha;
+  }
+
+  /**
   * 横書き用 文字の外枠補助線を描画する
   */
   public drawHorizontalCharOuterFrame(char, startX, startY) {
