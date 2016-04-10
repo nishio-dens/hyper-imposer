@@ -82,7 +82,9 @@ export class VirtualCanvas {
     var ctx = this.getCanvasContext();
     ctx.font = fontSize + "px " + fontName;
     ctx.textBaseline = "center";
-    ctx.fillText(char, startX, startY);
+    var x = this.virtualXToX(startX);
+    var y = this.virtualYToY(startY);
+    ctx.fillText(char, x, y);
   }
 
   public xToVirtualX(point: number): number {
@@ -97,11 +99,13 @@ export class VirtualCanvas {
 
   public virtualXToX(point: number): number {
     var scale: number = this.canvasWidth / (this.virtualCanvasWidth - (this.canvasOffsetX * 2));
+    console.log("X scale" + scale);
     return point * scale;
   }
 
   public virtualYToY(point: number): number {
     var scale: number = this.canvasHeight / (this.virtualCanvasHeight - (this.canvasOffsetY * 2));
+    console.log("Y scale" + scale);
     return point * scale;
   }
 

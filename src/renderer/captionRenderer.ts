@@ -28,7 +28,7 @@ export class CaptionRenderer {
   * @return {number} レンダリングした文字の横送り幅を返す
   */
   public drawHorizontalChar(char, startX, startY) : number {
-    var metrics = this.metricsTable.getMetrics(char);
+    var metrics = this.metricsTable.getMetrics(char, this.fontSize);
     this.canvas.drawChar(
       char, this.fontName, this.fontSize,
       startX, startY + metrics.hby + metrics.vby
@@ -40,7 +40,7 @@ export class CaptionRenderer {
   * 横書き用 文字の外枠補助線を描画する
   */
   public drawHorizontalCharOuterFrame(char, startX, startY) {
-    var metrics = this.metricsTable.getMetrics(char);
+    var metrics = this.metricsTable.getMetrics(char, this.fontSize);
     if (metrics) {
       this.canvas.drawRect(
         startX, startY,
@@ -54,7 +54,7 @@ export class CaptionRenderer {
   * 横書き用 文字のバウンディングボックスを描画する
   */
   public drawHorizontalCharBoundingBox(char, startX, startY) {
-    var metrics = this.metricsTable.getMetrics(char);
+    var metrics = this.metricsTable.getMetrics(char, this.fontSize);
     if (metrics) {
       this.canvas.drawRect(
         startX + metrics.hbx, startY + metrics.vby,

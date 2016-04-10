@@ -58,8 +58,10 @@ export class Renderer {
     if (this.isDebug) { actionTime = new Date().getTime(); }
 
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
-    this.captionRenderer.drawHorizontalCharBoundingBox("う", 10000, 1000);
-    this.captionRenderer.drawHorizontalCharOuterFrame("う", 10000, 1000);
+    var char = "う";
+    this.captionRenderer.drawHorizontalCharBoundingBox(char, 10000, 1000);
+    this.captionRenderer.drawHorizontalCharOuterFrame(char, 10000, 1000);
+    this.captionRenderer.drawHorizontalChar(char, 10000, 1000);
 
     if (this.isDebug) {
       var time: number = new Date().getTime() - actionTime;
