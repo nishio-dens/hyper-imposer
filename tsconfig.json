@@ -10,12 +10,12 @@
   },
   "files": [
     "./src/bootstrap.ts",
+    "./src/captions/charRenderingPosition.ts",
     "./src/fonts/metrics.ts",
     "./src/fonts/metricsTable.ts",
     "./src/renderer/aspectRatio.ts",
     "./src/renderer/captionRenderer.ts",
     "./src/renderer/captionSafeZoneRenderer.ts",
-    "./src/renderer/charRenderingPosition.ts",
     "./src/renderer/renderer.ts",
     "./src/renderer/virtualCanvas.ts",
     "./src/renderer/virtualCanvasSize.ts"

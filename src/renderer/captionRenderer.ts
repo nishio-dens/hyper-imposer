@@ -2,7 +2,7 @@
 
 import { MetricsTable } from "../fonts/metricsTable";
 import { VirtualCanvas } from "./virtualCanvas";
-import { CharRenderingPosition } from "./charRenderingPosition";
+import { CharRenderingPosition } from "../captions/charRenderingPosition";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
