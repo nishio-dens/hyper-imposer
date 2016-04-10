@@ -24,6 +24,7 @@ export class CaptionRenderer {
 
   private renderingTexts: any;
 
+  // TODO: サイズ変更に対応
   constructor(
     canvas: VirtualCanvas, metricsTable: MetricsTable,
     captionSafeZone: CaptionSafeZone,
@@ -113,7 +114,9 @@ export class CaptionRenderer {
       var cc  = new CaptionChar({
         char: text[i],
         startX: currentXPosition,
-        startY: currentYPosition + m.hby + m.vby - this.baseJapaneseCharacterSize,
+        startY: currentYPosition - this.baseJapaneseCharacterSize,
+        charStartX: currentXPosition,
+        charStartY: currentYPosition + m.hby + m.vby - this.baseJapaneseCharacterSize,
         width: m.ha,
         height: m.va,
         metrics: m
@@ -137,7 +140,7 @@ export class CaptionRenderer {
   private renderChar(char: CaptionChar) {
     this.canvas.drawChar(
       char.char, this.fontName, this.fontSize,
-      char.startX, char.startY
+      char.charStartX, char.charStartY
     );
   }
 
