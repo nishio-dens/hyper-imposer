@@ -1,14 +1,17 @@
 /// <reference path="../../typings/main.d.ts" />
 
+import { Metrics } from "../fonts/metrics";
 import { MetricsTable } from "../fonts/metricsTable";
 import { VirtualCanvas } from "./virtualCanvas";
 import { CaptionChar } from "../captions/captionChar";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
+import { CaptionSafeZone } from "../captions/captionSafeZone";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
   private metricsTable: MetricsTable;
+  private captionSafeZone: CaptionSafeZone;
   private outerFrameColor= "#00ff00";
   private boundingBoxColor = "#0000ff";
   private projectLineWidth: number = 1;
@@ -19,10 +22,12 @@ export class CaptionRenderer {
 
   constructor(
     canvas: VirtualCanvas, metricsTable: MetricsTable,
+    captionSafeZone: CaptionSafeZone,
     fontName: string, fontSize: number
   ) {
     this.canvas = canvas;
     this.metricsTable = metricsTable;
+    this.captionSafeZone = captionSafeZone;
 
     this.fontName = fontName;
     this.fontSize = fontSize;
@@ -58,6 +63,18 @@ export class CaptionRenderer {
   public calcHorizontalDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) {
+    var startX = 0, startY = 0;
+
+    if (position === CaptionPosition.BOTTOM_LEFT && alignment === CaptionAlignment.START) {
+      startX = this.captionSafeZone.getSafeStartX();
+      startY = this.captionSafeZone.getSafeEndY();
+    } else {
+      console.log("Not Implemented Yet");
+    }
+
+    for (var i = 0; i < text.length; i++) {
+
+    }
     // var metrics = this.metricsTable.getMetrics(char, this.fontSize);
     // var position = new CharRenderingPosition({
     //   char: char,
@@ -66,6 +83,14 @@ export class CaptionRenderer {
     //   width: metrics.ha,
     //   height: metrics.va
     // });
+  }
+
+  private calcCharMetrics(text: string) : Metrics[] {
+    var metrics : Metrics[] = [];
+    for (var i = 0; i < text.length; i++) {
+      metrics.push(this.metricsTable.getMetrics(text[i], this.fontSize));
+    }
+    return metrics;
   }
 
   private renderChar(char: CaptionChar) {

@@ -45,7 +45,7 @@ export class Renderer {
     this.captionSafeZone = new CaptionSafeZone(this.canvas);
 
     this.captionRenderer = new CaptionRenderer(
-      this.canvas, this.metricsTable, fontName, fontSize
+      this.canvas, this.metricsTable, this.captionSafeZone, fontName, fontSize
     );
 
     this.captionSafeZoneRenderer = new CaptionSafeZoneRenderer(this.canvas, this.captionSafeZone);
@@ -73,11 +73,11 @@ export class Renderer {
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
 
     this.captionRenderer.addCaptionText(
-      "皆さん、ABCこんにちは。", CaptionPosition.BOTTOM_CENTER, CaptionAlignment.CENTER, false, true
+      "皆さん、ABCこんにちは。", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
     );
-    this.captionRenderer.addCaptionText(
-      "縦書きは、ABCこちらです。", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
-    );
+    // this.captionRenderer.addCaptionText(
+    //   "縦書きは、ABCこちらです。", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+    // );
     this.captionRenderer.render();
 
     if (this.isDebug) {
