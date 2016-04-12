@@ -11,6 +11,8 @@ export class CaptionChar {
   private _width: number;
   private _height: number;
   private _metrics: Metrics;
+  private _replaceFromChar: string;
+  private _degreeOfRotation: number = 0;
 
   constructor(params: {
     char: string,
@@ -20,7 +22,7 @@ export class CaptionChar {
     charStartY: number,
     width: number,
     height: number,
-    metrics: Metrics
+    metrics: Metrics,
   }) {
     this._char = params.char;
     this._startX = params.startX;
@@ -40,4 +42,6 @@ export class CaptionChar {
   get width():  number { return this._width; }
   get height(): number { return this._height; }
   get metrics(): Metrics { return this._metrics; }
+  get replaceFromChar(): string { return this._replaceFromChar; }
+  get degreeOfRotation(): number { return this._degreeOfRotation; }
 }

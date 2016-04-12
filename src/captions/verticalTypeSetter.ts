@@ -21,6 +21,7 @@ export class VerticalTypeSetter extends TypeSetter {
   public calcDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) : CaptionChar[] {
+    // TODO: 小書きの仮名 縦の場合は外枠の天地中央で右寄りに配置
     // TODO: 縦書き用文字置換対応
     // TODO: 回転文字対応
     // TODO: テキストタグ対応 <G>23</G>や<RB VALUE="あ">嗚</RB>など
@@ -42,14 +43,32 @@ export class VerticalTypeSetter extends TypeSetter {
     for (var i = 0; i < text.length; i++) {
       var m : Metrics = textMetrics[i];
       var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
+      var verticalOffsetX = -1.0 * (m.hbx - m.vbx);
+      var verticalOffsetY = -1.0 * (m.hby + m.vby);
+
+      var startX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
+      var startY = currentYPosition;
+      var charStartX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
+      var charStartY = currentYPosition + m.hby + m.vby;
+      var width = m.ha;
+      var height = m.va;
+      // TODO: 小書き変換
+      if (m.code === "12519" || m.code === "12451") {
+        charStartX = currentXPosition - this.baseJapaneseCharacterSize + (offsetX * 2);
+        charStartY = currentYPosition + m.hby + m.vby - ((m.va - m.height) / 4); // TODO: FIXME
+
+        startX = startX + offsetX;
+        startY = startY - ((m.va - m.height) / 4); // TODO: FIXME
+      }
+
       var cc  = new CaptionChar({
         char: text[i],
-        startX: currentXPosition - this.baseJapaneseCharacterSize + offsetX,
-        startY: currentYPosition,
-        charStartX: currentXPosition - this.baseJapaneseCharacterSize + offsetX,
-        charStartY: currentYPosition + m.hby + m.vby,
-        width: m.ha,
-        height: m.va,
+        startX: startX,
+        startY: startY,
+        charStartX: charStartX,
+        charStartY: charStartY,
+        width: width,
+        height: height,
         metrics: m
       });
       renderText.push(cc);

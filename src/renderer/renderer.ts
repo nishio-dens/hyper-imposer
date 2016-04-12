@@ -81,10 +81,10 @@ export class Renderer {
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
 
     this.captionRenderer.addCaptionText(
-      "美しい、日本語。ABCg", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
+      "ケーション、日本語。ABCg", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
     );
     this.captionRenderer.addCaptionText(
-     "縦書きは︑ABです︒", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+     "ケィション︑ABです︒", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     this.captionRenderer.render();
 
