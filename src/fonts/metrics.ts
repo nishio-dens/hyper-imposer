@@ -14,6 +14,7 @@ export class Metrics {
   private _vby: number;
   private _ha: number;
   private _va: number;
+  private _vertGid: number;
 
   constructor(params: {
      code: string,
@@ -28,7 +29,8 @@ export class Metrics {
      vbx?: number,
      vby?: number,
      ha?: number,
-     va?: number
+     va?: number,
+     vertGid?: number
    }) {
     this._code = params.code;
     this._minX = params.minX;
@@ -43,6 +45,7 @@ export class Metrics {
     this._vby = params.vby;
     this._ha = params.ha;
     this._va = params.va;
+    this._vertGid = params.vertGid;
   }
 
   get code(): string { return this._code; }
@@ -58,6 +61,7 @@ export class Metrics {
   get vby(): number { return this._vby; }
   get ha(): number { return this._ha; }
   get va(): number { return this._va; }
+  get vertGid(): number { return this._vertGid; }
 
   set code(value: string) { this._code = value; }
   set minX(value: number) { this._minX = value; }
@@ -72,4 +76,5 @@ export class Metrics {
   set vby(value: number) { this._vby = value; }
   set ha(value: number) { this._ha = value; }
   set va(value: number) { this._va = value; }
+  set vertGid(value: number) { this._vertGid = value; }
 }
