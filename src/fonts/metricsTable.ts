@@ -45,6 +45,7 @@ export class MetricsTable {
   /**
   * 文字のメトリクスを返す
   * サイズは全てVirtualCanvasの大きさを返す
+  * vertical = true で 縦書き用のメトリクスを返す
   */
   public getMetrics(char: any, fontSize: number, vertical: boolean = false) : Metrics {
     var gid = this.charToGid(char);
@@ -56,22 +57,29 @@ export class MetricsTable {
   */
   public getMetricsFromGid(gid: number, fontSize: number, vertical: boolean) : Metrics {
     var m : Metrics = this.table[gid];
-    return new Metrics({
-      code:   m.code,
-      minX:   this.pixelsFromPoints(m.minX, fontSize),
-      minY:   this.pixelsFromPoints(m.minY, fontSize),
-      maxX:   this.pixelsFromPoints(m.maxX, fontSize),
-      maxY:   this.pixelsFromPoints(m.maxY, fontSize),
-      width:  this.pixelsFromPoints(m.width, fontSize),
-      height: this.pixelsFromPoints(m.height, fontSize),
-      hbx:    this.pixelsFromPoints(m.hbx, fontSize),
-      hby:    this.pixelsFromPoints(m.hby, fontSize),
-      vbx:    this.pixelsFromPoints(m.vbx, fontSize),
-      vby:    this.pixelsFromPoints(m.vby, fontSize),
-      ha:     this.pixelsFromPoints(m.ha, fontSize),
-      va:     this.pixelsFromPoints(m.va, fontSize),
-      vertGid: m.vertGid
-    });
+    var code = m.code;
+    if (vertical && m.vertGid != null) {
+      m = this.getMetricsFromGid(m.vertGid, fontSize, true);
+      m.code = code;
+      return m;
+    } else {
+      return new Metrics({
+        code:   code,
+        minX:   this.pixelsFromPoints(m.minX, fontSize),
+        minY:   this.pixelsFromPoints(m.minY, fontSize),
+        maxX:   this.pixelsFromPoints(m.maxX, fontSize),
+        maxY:   this.pixelsFromPoints(m.maxY, fontSize),
+        width:  this.pixelsFromPoints(m.width, fontSize),
+        height: this.pixelsFromPoints(m.height, fontSize),
+        hbx:    this.pixelsFromPoints(m.hbx, fontSize),
+        hby:    this.pixelsFromPoints(m.hby, fontSize),
+        vbx:    this.pixelsFromPoints(m.vbx, fontSize),
+        vby:    this.pixelsFromPoints(m.vby, fontSize),
+        ha:     this.pixelsFromPoints(m.ha, fontSize),
+        va:     this.pixelsFromPoints(m.va, fontSize),
+        vertGid: m.vertGid
+      });
+    }
   }
 
   /**

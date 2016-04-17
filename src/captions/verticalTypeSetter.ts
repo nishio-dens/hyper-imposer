@@ -16,32 +16,12 @@ export class VerticalTypeSetter extends TypeSetter {
   }
 
   /**
-  * 横書き用文字を縦書き文字に変換する
-  */
-  public convertCharToVertChar(text: string) : string {
-    var convertedText = "";
-    for (var i = 0; i < text.length; i++) {
-      var c = text[i];
-      var m = this.metricsTable.getMetrics(c, this.fontSize);
-      if (m.vertGid) {
-        var vm = this.metricsTable.getMetricsFromGid(m.vertGid, this.fontSize, false);
-        if (vm.code) {
-          c = String.fromCharCode(vm.code);
-        }
-      }
-      convertedText += c;
-    }
-    return convertedText;
-  }
-
-  /**
   * 縦方向字幕レンダリングのポジション計算
   */
   public calcDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) : CaptionChar[] {
-    // TODO: 小書きの仮名 縦の場合は外枠の天地中央で右寄りに配置
-    // TODO: 縦書き用文字置換対応
+    // TODO: 縦書き文字描画位置修正
     // TODO: 回転文字対応
     // TODO: テキストタグ対応 <G>23</G>や<RB VALUE="あ">嗚</RB>など
     // TODO: 複数行対応
@@ -49,7 +29,7 @@ export class VerticalTypeSetter extends TypeSetter {
     // TODO: 組み文字
     // TODO: 先頭「 等の役物位置調整対応
     var verticalText = this.convertCharToVertChar(text);
-    var textMetrics = this.calcCharMetrics(verticalText);
+    var textMetrics = this.calcCharMetrics(verticalText, true);
 
     var startPosition = this.calcOneLineInitialPoint(
       textMetrics, position, alignment
@@ -89,6 +69,25 @@ export class VerticalTypeSetter extends TypeSetter {
     }
 
     return renderText;
+  }
+
+  /**
+  * 横書き用文字を縦書き文字に変換する
+  */
+  private convertCharToVertChar(text: string) : string {
+    var convertedText = "";
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      var m = this.metricsTable.getMetrics(c, this.fontSize);
+      if (m.vertGid) {
+        var vm = this.metricsTable.getMetricsFromGid(m.vertGid, this.fontSize, false);
+        if (vm.code) {
+          c = String.fromCharCode(vm.code);
+        }
+      }
+      convertedText += c;
+    }
+    return convertedText;
   }
 
   /**
