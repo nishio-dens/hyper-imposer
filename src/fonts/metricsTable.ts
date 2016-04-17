@@ -46,8 +46,16 @@ export class MetricsTable {
   * 文字のメトリクスを返す
   * サイズは全てVirtualCanvasの大きさを返す
   */
-  public getMetrics(char: any, fontSize: number) : Metrics {
-    var m : Metrics = this.table[this.charToGid(char)];
+  public getMetrics(char: any, fontSize: number, vertical: boolean = false) : Metrics {
+    var gid = this.charToGid(char);
+    return this.getMetricsFromGid(gid, fontSize, vertical);
+  }
+
+  /**
+  * GIDからメトリクスを取得する
+  */
+  public getMetricsFromGid(gid: number, fontSize: number, vertical: boolean) : Metrics {
+    var m : Metrics = this.table[gid];
     return new Metrics({
       code:   m.code,
       minX:   this.pixelsFromPoints(m.minX, fontSize),

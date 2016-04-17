@@ -1,7 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 export class Metrics {
-  private _code: string;
+  private _code: number;
   private _minX: number;
   private _minY: number;
   private _maxX: number;
@@ -17,7 +17,7 @@ export class Metrics {
   private _vertGid: number;
 
   constructor(params: {
-     code: string,
+     code: number,
      minX?: number,
      minY?: number,
      maxX?: number,
@@ -48,7 +48,7 @@ export class Metrics {
     this._vertGid = params.vertGid;
   }
 
-  get code(): string { return this._code; }
+  get code(): number { return this._code; }
   get minX(): number { return this._minX; }
   get minY(): number { return this._minY; }
   get maxX(): number { return this._maxX; }
@@ -63,7 +63,7 @@ export class Metrics {
   get va(): number { return this._va; }
   get vertGid(): number { return this._vertGid; }
 
-  set code(value: string) { this._code = value; }
+  set code(value: number) { this._code = value; }
   set minX(value: number) { this._minX = value; }
   set minY(value: number) { this._minY = value; }
   set maxX(value: number) { this._maxX = value; }

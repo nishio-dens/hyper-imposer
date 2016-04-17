@@ -16,6 +16,25 @@ export class VerticalTypeSetter extends TypeSetter {
   }
 
   /**
+  * 横書き用文字を縦書き文字に変換する
+  */
+  public convertCharToVertChar(text: string) : string {
+    var convertedText = "";
+    for (var i = 0; i < text.length; i++) {
+      var c = text[i];
+      var m = this.metricsTable.getMetrics(c, this.fontSize);
+      if (m.vertGid) {
+        var vm = this.metricsTable.getMetricsFromGid(m.vertGid, this.fontSize, false);
+        if (vm.code) {
+          c = String.fromCharCode(vm.code);
+        }
+      }
+      convertedText += c;
+    }
+    return convertedText;
+  }
+
+  /**
   * 縦方向字幕レンダリングのポジション計算
   */
   public calcDrawingPosition(
@@ -29,7 +48,8 @@ export class VerticalTypeSetter extends TypeSetter {
     // TODO: ルビ
     // TODO: 組み文字
     // TODO: 先頭「 等の役物位置調整対応
-    var textMetrics = this.calcCharMetrics(text);
+    var verticalText = this.convertCharToVertChar(text);
+    var textMetrics = this.calcCharMetrics(verticalText);
 
     var startPosition = this.calcOneLineInitialPoint(
       textMetrics, position, alignment
@@ -40,7 +60,7 @@ export class VerticalTypeSetter extends TypeSetter {
     var currentXPosition = startX;
     var currentYPosition = startY;
 
-    for (var i = 0; i < text.length; i++) {
+    for (var i = 0; i < verticalText.length; i++) {
       var m : Metrics = textMetrics[i];
       var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
       var verticalOffsetX = -1.0 * (m.hbx - m.vbx);
@@ -54,7 +74,7 @@ export class VerticalTypeSetter extends TypeSetter {
       var height = m.va;
 
       var cc  = new CaptionChar({
-        char: text[i],
+        char: verticalText[i],
         startX: startX,
         startY: startY,
         charStartX: charStartX,

@@ -84,7 +84,8 @@ export class Renderer {
       "ケーション、日本語。ABCg", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
     );
     this.captionRenderer.addCaptionText(
-     "ケィション︑ABです︒", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+      // "﹁ケィション︑日本語︒ABg", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+      "「ケィション、日本語。ABg", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     this.captionRenderer.render();
 
