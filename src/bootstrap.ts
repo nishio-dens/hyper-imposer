@@ -16,10 +16,10 @@ export class Bootstrap {
 
   public initializeRenderer(
     canvasId: string, width: number, height: number, aspect: AspectRatio,
-    fontName: string, fontSize: number, metricsCsv: string
+    fontName: string, fontSize: number, fontMetrics: string
   ) {
     this.renderer = new Renderer(
-      canvasId, width, height, aspect, fontName, fontSize, metricsCsv
+      canvasId, width, height, aspect, fontName, fontSize, fontMetrics
     );
     this.renderer.setDebugMode(this.isDebugMode());
 

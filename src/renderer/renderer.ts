@@ -27,7 +27,7 @@ export class Renderer {
   constructor(canvasId: string, canvasWidth: number,
               canvasHeight: number, aspectRatio: AspectRatio,
               fontName: string, fontSize: number,
-              fontMetricsCsv: string) {
+              fontMetrics: string) {
     if (aspectRatio === AspectRatio.AR16_9) {
       this.virtualCanvasWidth = VirtualCanvasSize.AR16_9_WIDTH;
       this.virtualCanvasHeight = VirtualCanvasSize.AR16_9_HEIGHT;
@@ -42,7 +42,7 @@ export class Renderer {
     );
 
     this.metricsTable = new MetricsTable();
-    this.metricsTable.initializeMetrics(fontMetricsCsv, this.canvas);
+    this.metricsTable.initializeMetrics(fontMetrics, this.canvas);
 
     this.captionSafeZone = new CaptionSafeZone(this.canvas);
 

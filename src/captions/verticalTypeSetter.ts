@@ -52,14 +52,6 @@ export class VerticalTypeSetter extends TypeSetter {
       var charStartY = currentYPosition + m.hby + m.vby;
       var width = m.ha;
       var height = m.va;
-      // TODO: 小書き変換
-      if (m.code === "12519" || m.code === "12451") {
-        charStartX = currentXPosition - this.baseJapaneseCharacterSize + (offsetX * 2);
-        charStartY = currentYPosition + m.hby + m.vby - ((m.va - m.height) / 4); // TODO: FIXME
-
-        startX = startX + offsetX;
-        startY = startY - ((m.va - m.height) / 4); // TODO: FIXME
-      }
 
       var cc  = new CaptionChar({
         char: text[i],
