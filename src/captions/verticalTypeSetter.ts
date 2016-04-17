@@ -43,13 +43,16 @@ export class VerticalTypeSetter extends TypeSetter {
     for (var i = 0; i < verticalText.length; i++) {
       var m : Metrics = textMetrics[i];
       var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
-      var verticalOffsetX = -1.0 * (m.hbx - m.vbx);
-      var verticalOffsetY = -1.0 * (m.hby + m.vby);
-
       var startX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
       var startY = currentYPosition;
       var charStartX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
       var charStartY = currentYPosition + m.hby + m.vby;
+      if (m.isVertical) {
+        var verticalOffsetX = -1.0 * (m.hbx - m.vbx);
+        var verticalOffsetY = -1.0 * (m.hby + m.vby);
+        // charStartX = charStartX + verticalOffsetX;
+        // charStartY = charStartY + verticalOffsetY;
+      }
       var width = m.ha;
       var height = m.va;
 

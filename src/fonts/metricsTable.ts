@@ -61,6 +61,7 @@ export class MetricsTable {
     if (vertical && m.vertGid != null) {
       m = this.getMetricsFromGid(m.vertGid, fontSize, true);
       m.code = code;
+      m.isVertical = true;
       return m;
     } else {
       return new Metrics({

@@ -15,6 +15,7 @@ export class Metrics {
   private _ha: number;
   private _va: number;
   private _vertGid: number;
+  private _isVertical: boolean;
 
   constructor(params: {
      code: number,
@@ -30,7 +31,8 @@ export class Metrics {
      vby?: number,
      ha?: number,
      va?: number,
-     vertGid?: number
+     vertGid?: number,
+     isVertical?: boolean
    }) {
     this._code = params.code;
     this._minX = params.minX;
@@ -46,6 +48,7 @@ export class Metrics {
     this._ha = params.ha;
     this._va = params.va;
     this._vertGid = params.vertGid;
+    this._isVertical = params.isVertical || false;
   }
 
   get code(): number { return this._code; }
@@ -62,6 +65,7 @@ export class Metrics {
   get ha(): number { return this._ha; }
   get va(): number { return this._va; }
   get vertGid(): number { return this._vertGid; }
+  get isVertical(): boolean { return this._isVertical; }
 
   set code(value: number) { this._code = value; }
   set minX(value: number) { this._minX = value; }
@@ -77,4 +81,5 @@ export class Metrics {
   set ha(value: number) { this._ha = value; }
   set va(value: number) { this._va = value; }
   set vertGid(value: number) { this._vertGid = value; }
+  set isVertical(value: boolean) { this._isVertical = value; }
 }
