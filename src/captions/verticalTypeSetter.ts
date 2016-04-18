@@ -49,7 +49,7 @@ export class VerticalTypeSetter extends TypeSetter {
       var charStartY = currentYPosition + m.hby + m.vby;
       if (m.isVertical) {
         charStartX = currentXPosition - m.vbx + m.hbx - this.baseJapaneseCharacterSize;
-        charStartY = currentYPosition + m.va - m.vby;
+        charStartY = currentYPosition + m.vby + m.height;
       }
       var width = m.ha;
       var height = m.va;

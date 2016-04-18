@@ -85,7 +85,7 @@ export class Renderer {
     );
     this.captionRenderer.addCaptionText(
       // "﹁ケィション︑日本語︒ABg", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
-      "「美しぃ、日本語。ABg", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+      "ではがわ。ｌぁみもじか", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     this.captionRenderer.render();
 
