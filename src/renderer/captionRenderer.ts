@@ -99,10 +99,7 @@ export class CaptionRenderer {
   * 文字を描画
   */
   private renderChar(char: CaptionChar) {
-    this.canvas.drawChar(
-      char.char, this.fontName, this.fontSize,
-      char.charStartX, char.charStartY
-    );
+    this.canvas.drawChar(char, this.fontSize);
   }
 
   /**

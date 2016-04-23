@@ -1,5 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
+import { CaptionChar } from "../captions/captionChar";
+
 export class VirtualCanvas {
   // canvas
   private canvas;
@@ -80,16 +82,27 @@ export class VirtualCanvas {
     ctx.closePath();
   }
 
-  /**
-  * Baseline Center として、文字を描画する
-  */
-  public drawChar(char, fontName, fontSize, startX, startY) : void {
+  //
+  // Deprecated
+  //
+  // public drawChar(char, fontName, fontSize, startX, startY) : void {
+  //   var ctx = this.getCanvasContext();
+  //   ctx.font = fontSize + "px " + fontName;
+  //   ctx.textBaseline = "center";
+  //   var x = this.virtualXToX(startX);
+  //   var y = this.virtualYToY(startY);
+  //   ctx.fillText(char, x, y);
+  // }
+
+  public drawChar(char: CaptionChar, fontSize: number) {
+    var glyph = this.opentype.glyphs.get(char.metrics.gid);
     var ctx = this.getCanvasContext();
-    ctx.font = fontSize + "px " + fontName;
-    ctx.textBaseline = "center";
-    var x = this.virtualXToX(startX);
-    var y = this.virtualYToY(startY);
-    ctx.fillText(char, x, y);
+    glyph.draw(
+      ctx,
+      this.virtualXToX(char.charStartX),
+      this.virtualYToY(char.charStartY),
+      fontSize
+    );
   }
 
   public xToVirtualX(point: number): number {

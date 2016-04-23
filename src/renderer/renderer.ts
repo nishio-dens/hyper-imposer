@@ -80,13 +80,11 @@ export class Renderer {
     }
 
     this.canvas.drawRect(0, 0, this.virtualCanvasWidth, this.virtualCanvasHeight, "#00FF00", 2);
-
     this.captionRenderer.addCaptionText(
-      "ケーション、日本語。ABCg", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
+      "「美しい、にゃあぁー」。", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
     );
     this.captionRenderer.addCaptionText(
-      // "﹁ケィション︑日本語︒ABg", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
-      "ではがわ。ｌぁみもじか", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+      "「美しい、にゃあぁー」。", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     this.captionRenderer.render();
 

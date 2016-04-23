@@ -21,13 +21,12 @@ export class VerticalTypeSetter extends TypeSetter {
   public calcDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) : CaptionChar[] {
-    // TODO: 縦書き文字描画位置修正
     // TODO: 回転文字対応
     // TODO: テキストタグ対応 <G>23</G>や<RB VALUE="あ">嗚</RB>など
     // TODO: 複数行対応
     // TODO: ルビ
     // TODO: 組み文字
-    // TODO: 先頭「 等の役物位置調整対応
+    // TODO: 先頭「 等の約物位置調整対応
     var verticalText = this.convertCharToVertChar(text);
     var textMetrics = this.calcCharMetrics(verticalText, true);
 
@@ -47,10 +46,6 @@ export class VerticalTypeSetter extends TypeSetter {
       var startY = currentYPosition;
       var charStartX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
       var charStartY = currentYPosition + m.hby + m.vby;
-      if (m.isVertical) {
-        charStartX = currentXPosition - m.vbx + m.hbx - this.baseJapaneseCharacterSize;
-        charStartY = currentYPosition + m.vby + m.height;
-      }
       var width = m.ha;
       var height = m.va;
 
