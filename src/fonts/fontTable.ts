@@ -7,14 +7,18 @@ export class FontTable {
   // 文字コード と GIDのペア
   private cmap: {[charCode: number]: number; } = {};
   private virtualCanvas: VirtualCanvas;
+  private fontMetrics;
   private unitsPerEm: number;
   private fontResolution;
   private opentype;
 
   public initialize(
-    opentype, virtualCanvas: VirtualCanvas, fontResolution: number = 1000
+    opentype, fontMetrics, virtualCanvas: VirtualCanvas, fontResolution: number = 1000
   ) {
     this.opentype = opentype;
+    // TODO: Opentype.js で取得できない情報を別途受け取っている
+    // opentype.js だけで完結するように修正するのが望ましい
+    this.fontMetrics = fontMetrics;
     this.virtualCanvas = virtualCanvas;
     this.fontResolution = fontResolution;
     this.unitsPerEm = this.opentype.tables.head.unitsPerEm;
@@ -71,7 +75,25 @@ export class FontTable {
   }
 
   private getMetricsFromOpentype(gid: number) : Metrics {
-    return null;
+    // TODO: opentype jsだけで値が取得できないので修正する
+    var m = this.fontMetrics.metrics[gid];
+    var metrics = new Metrics({
+      code:   m.code,
+      minX:   parseFloat(m.minX),
+      minY:   parseFloat(m.minY),
+      maxX:   parseFloat(m.maxX),
+      maxY:   parseFloat(m.maxY),
+      width:  parseFloat(m.width),
+      height: parseFloat(m.height),
+      hbx:    parseFloat(m.hbx),
+      hby:    parseFloat(m.hby),
+      vbx:    parseFloat(m.vby),
+      vby:    parseFloat(m.vby),
+      ha:     parseFloat(m.ha),
+      va:     parseFloat(m.va),
+      vertGid: m.vertGid
+    });
+    return metrics;
   }
 
   private pixelsFromPoints(value: number, fontSize: number) {
