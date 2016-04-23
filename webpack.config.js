@@ -21,7 +21,11 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['','.ts','.js','.json', '.css', '.html']
+    extensions: ['','.ts','.js','.json', '.css', '.html'],
+    modulesDirectories: ['node_modules'],
+    alias: {
+      opentypejs: "opentype.js/dist/opentype.js"
+    }
   },
 
   module: {
