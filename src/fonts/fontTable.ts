@@ -4,42 +4,21 @@ import { Metrics } from "./metrics";
 import { VirtualCanvas } from "../renderer/virtualCanvas";
 
 export class FontTable {
-  // Metrics情報を格納する keyはGlyphID(GID)
-  private table : { [key: number] : Metrics };
   // 文字コード と GIDのペア
-  private cmap: {[charCode: string]: number; } = {};
+  private cmap: {[charCode: number]: number; } = {};
   private virtualCanvas: VirtualCanvas;
+  private unitsPerEm: number;
   private fontResolution;
+  private opentype;
 
   public initialize(
-    metricsJson, virtualCanvas: VirtualCanvas, fontResolution: number = 1000
+    opentype, virtualCanvas: VirtualCanvas, fontResolution: number = 1000
   ) {
+    this.opentype = opentype;
     this.virtualCanvas = virtualCanvas;
     this.fontResolution = fontResolution;
-
-    this.table = {};
-    for (var gid in metricsJson.metrics) {
-      var m = metricsJson.metrics[gid];
-      var metrics = new Metrics({
-        code:   m.code,
-        minX:   parseFloat(m.minX),
-        minY:   parseFloat(m.minY),
-        maxX:   parseFloat(m.maxX),
-        maxY:   parseFloat(m.maxY),
-        width:  parseFloat(m.width),
-        height: parseFloat(m.height),
-        hbx:    parseFloat(m.hbx),
-        hby:    parseFloat(m.hby),
-        vbx:    parseFloat(m.vby),
-        vby:    parseFloat(m.vby),
-        ha:     parseFloat(m.ha),
-        va:     parseFloat(m.va),
-        vertGid: m.vertGid
-      });
-      this.table[gid] = metrics;
-    }
-
-    this.cmap = metricsJson.cmap;
+    this.unitsPerEm = this.opentype.tables.head.unitsPerEm;
+    this.cmap = opentype.tables.cmap.glyphIndexMap;
   }
 
   /**
@@ -56,7 +35,7 @@ export class FontTable {
   * GIDからメトリクスを取得する
   */
   public getMetricsFromGid(gid: number, fontSize: number, vertical: boolean) : Metrics {
-    var m : Metrics = this.table[gid];
+    var m : Metrics = this.getMetricsFromOpentype(gid);
     var code = m.code;
     if (vertical && m.vertGid != null) {
       m = this.getMetricsFromGid(m.vertGid, fontSize, true);
@@ -89,6 +68,10 @@ export class FontTable {
   public charToGid(char: any) : number {
     var code = this.cmap[char.charCodeAt()];
     return code;
+  }
+
+  private getMetricsFromOpentype(gid: number) : Metrics {
+    return null;
   }
 
   private pixelsFromPoints(value: number, fontSize: number) {
