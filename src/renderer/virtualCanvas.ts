@@ -82,17 +82,6 @@ export class VirtualCanvas {
     ctx.closePath();
   }
 
-  //
-  // Deprecated
-  //
-  // public drawChar(char, fontName, fontSize, startX, startY) : void {
-  //   var ctx = this.getCanvasContext();
-  //   ctx.font = fontSize + "px " + fontName;
-  //   ctx.textBaseline = "center";
-  //   var x = this.virtualXToX(startX);
-  //   var y = this.virtualYToY(startY);
-  //   ctx.fillText(char, x, y);
-  // }
 
   public drawChar(char: CaptionChar, fontSize: number) {
     var glyph = this.opentype.glyphs.get(char.metrics.gid);
