@@ -24,7 +24,8 @@ module.exports = {
     extensions: ['','.ts','.js','.json', '.css', '.html'],
     modulesDirectories: ['node_modules'],
     alias: {
-      opentypejs: "opentype.js/dist/opentype.js"
+      // opentypejs: "opentype.js/dist/opentype.js"
+      opentypejs: "opentype.js"
     }
   },
 

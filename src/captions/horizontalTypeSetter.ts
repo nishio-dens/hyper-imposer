@@ -30,7 +30,7 @@ export class HorizontalTypeSetter extends TypeSetter {
       console.log("Not Implemented Yet");
     }
 
-    var textMetrics = this.calcCharMetrics(text);
+    var textMetrics = this.getTextMetrics(text);
     var renderText = [];
     var currentXPosition = startX;
     var currentYPosition = startY;

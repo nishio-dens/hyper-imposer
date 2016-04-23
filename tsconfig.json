@@ -16,6 +16,7 @@
     "./src/captions/captionSafeZone.ts",
     "./src/captions/horizontalTypeSetter.ts",
     "./src/captions/typeSetter.ts",
+    "./src/captions/verticalRotateCharacter.ts",
     "./src/captions/verticalTypeSetter.ts",
     "./src/fonts/fontTable.ts",
     "./src/fonts/metrics.ts",

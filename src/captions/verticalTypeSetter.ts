@@ -7,6 +7,7 @@ import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
 import { CaptionSafeZone } from "../captions/captionSafeZone";
 import { TypeSetter } from "../captions/typeSetter";
+import { VerticalRotateCharacter } from "./verticalRotateCharacter";
 
 export class VerticalTypeSetter extends TypeSetter {
   constructor(captionSafeZone: CaptionSafeZone, fontSize: number, fontTable: FontTable) {
@@ -28,7 +29,8 @@ export class VerticalTypeSetter extends TypeSetter {
     // TODO: 組み文字
     // TODO: 先頭「 等の約物位置調整対応
     var verticalText = this.convertCharToVertChar(text);
-    var textMetrics = this.calcCharMetrics(verticalText, true);
+    var textMetrics = this.getTextMetrics(verticalText, true);
+    this.convertToVerticalRotateMetrics(textMetrics);
 
     var startPosition = this.calcOneLineInitialPoint(
       textMetrics, position, alignment
@@ -84,6 +86,15 @@ export class VerticalTypeSetter extends TypeSetter {
       convertedText += c;
     }
     return convertedText;
+  }
+
+  private convertToVerticalRotateMetrics(metrics: Metrics[]) {
+    for (var i = 0; i < metrics.length; i++) {
+      var char : string = String.fromCharCode(metrics[i].code);
+      if (VerticalRotateCharacter.isRotateCharacter(char)) {
+        console.log("CALL " + char);
+      }
+    }
   }
 
   /**

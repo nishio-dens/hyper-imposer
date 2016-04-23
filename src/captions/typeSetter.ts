@@ -46,7 +46,7 @@ export class TypeSetter {
     this.baseJapaneseCharacterSize = size;
   }
 
-  protected calcCharMetrics(text: string, vertical: boolean = false) : Metrics[] {
+  protected getTextMetrics(text: string, vertical: boolean = false) : Metrics[] {
     var metrics : Metrics[] = [];
     for (var i = 0; i < text.length; i++) {
       metrics.push(this.fontTable.getMetrics(text[i], this.fontSize, vertical));
