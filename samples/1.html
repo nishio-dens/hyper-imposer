@@ -36,32 +36,38 @@
     var height = document.getElementById("captionCanvas").height;
 
     $(document).ready(function() {
-      imposer.loadFont("./fonts/gen_shin_regular_p.ttf", function(err, font) {
-        var renderer = imposer.initializeRenderer(
-          "captionCanvas", width, height, HyperImposer.AspectRatio.AR16_9,
-          "GenShinRegularP", 50
-        );
-        renderer.render();
+      $.ajax({
+        url: "./metrics/genshin.json",
+        type: "GET",
+        success: function(fontMetrics) {
+          imposer.loadFont("./fonts/gen_shin_regular_p.ttf", function(err, font) {
+            var renderer = imposer.initializeRenderer(
+              "captionCanvas", width, height, HyperImposer.AspectRatio.AR16_9,
+              "GenShinRegularP", 50
+            );
+            renderer.render();
 
-        window.clear = function clear() {
-          renderer.clear();
+            window.clear = function clear() {
+              renderer.clear();
+            }
+
+            window.redraw = function redraw() {
+              renderer.clear();
+              renderer.render();
+            }
+
+            window.changeCanvasSize = function(width, height) {
+              var canvas = document.getElementById("captionCanvas");
+              canvas.width = width;
+              canvas.height = height;
+
+              renderer.clear();
+              renderer.setCanvasSize(width, height);
+              renderer.render();
+            }
+          });
         }
-
-        window.redraw = function redraw() {
-          renderer.clear();
-          renderer.render();
-        }
-
-        window.changeCanvasSize = function(width, height) {
-          var canvas = document.getElementById("captionCanvas");
-          canvas.width = width;
-          canvas.height = height;
-
-          renderer.clear();
-          renderer.setCanvasSize(width, height);
-          renderer.render();
-        }
-      });
+      })
     });
     </script>
   </body>

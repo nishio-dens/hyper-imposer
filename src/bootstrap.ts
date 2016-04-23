@@ -27,10 +27,12 @@ export class Bootstrap {
 
   public initializeRenderer(
     canvasId: string, width: number, height: number, aspect: AspectRatio,
-    fontName: string, fontSize: number
+    fontName: string, fontSize: number, fontMetrics: any
   ) {
+    // TODO: opentype.jsから取れない情報があるため、サーバからFontMetricsを受け取って処理
+    // opentype.js 側を改良し情報を取れるようにするのが望ましい
     this.renderer = new Renderer(
-      canvasId, width, height, aspect, fontName, fontSize, this.opentype
+      canvasId, width, height, aspect, fontName, fontSize, this.opentype, fontMetrics
     );
     this.renderer.setDebugMode(this.isDebugMode());
 
