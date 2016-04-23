@@ -1,6 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 export class Metrics {
+  private _gid: number;
   private _code: number;
   private _minX: number;
   private _minY: number;
@@ -18,6 +19,7 @@ export class Metrics {
   private _isVertical: boolean;
 
   constructor(params: {
+     gid: number,
      code: number,
      minX?: number,
      minY?: number,
@@ -34,23 +36,25 @@ export class Metrics {
      vertGid?: number,
      isVertical?: boolean
    }) {
-    this._code = params.code;
-    this._minX = params.minX;
-    this._minY = params.minY;
-    this._maxX = params.maxX;
-    this._maxY = params.maxY;
-    this._width = params.width;
-    this._height = params.height;
-    this._hbx = params.hbx;
-    this._hby = params.hby;
-    this._vbx = params.vbx;
-    this._vby = params.vby;
-    this._ha = params.ha;
-    this._va = params.va;
-    this._vertGid = params.vertGid;
-    this._isVertical = params.isVertical || false;
-  }
+     this._gid = params.gid;
+     this._code = params.code;
+     this._minX = params.minX;
+     this._minY = params.minY;
+     this._maxX = params.maxX;
+     this._maxY = params.maxY;
+     this._width = params.width;
+     this._height = params.height;
+     this._hbx = params.hbx;
+     this._hby = params.hby;
+     this._vbx = params.vbx;
+     this._vby = params.vby;
+     this._ha = params.ha;
+     this._va = params.va;
+     this._vertGid = params.vertGid;
+     this._isVertical = params.isVertical || false;
+   }
 
+  get gid(): number { return this._gid; }
   get code(): number { return this._code; }
   get minX(): number { return this._minX; }
   get minY(): number { return this._minY; }
@@ -67,6 +71,7 @@ export class Metrics {
   get vertGid(): number { return this._vertGid; }
   get isVertical(): boolean { return this._isVertical; }
 
+  set gid(value: number) { this._gid = value; }
   set code(value: number) { this._code = value; }
   set minX(value: number) { this._minX = value; }
   set minY(value: number) { this._minY = value; }

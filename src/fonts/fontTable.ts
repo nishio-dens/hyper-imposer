@@ -48,6 +48,7 @@ export class FontTable {
       return m;
     } else {
       return new Metrics({
+        gid:    gid,
         code:   code,
         minX:   this.pixelsFromPoints(m.minX, fontSize),
         minY:   this.pixelsFromPoints(m.minY, fontSize),
@@ -78,6 +79,7 @@ export class FontTable {
     // TODO: opentype jsだけで値が取得できないので修正する
     var m = this.fontMetrics.metrics[gid];
     var metrics = new Metrics({
+      gid:    gid,
       code:   m.code,
       minX:   parseFloat(m.minX),
       minY:   parseFloat(m.minY),
