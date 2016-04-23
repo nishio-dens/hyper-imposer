@@ -17,9 +17,12 @@ export class VirtualCanvas {
   private canvasOffsetX: number;
   private canvasOffsetY: number;
 
+  private opentype;
+
   constructor(
     canvasId: string, canvasWidth: number, canvasHeight: number,
     virtualCanvasWidth: number, virtualCanvasHeight: number,
+    opentype: any,
     canvasOffsetX: number = 0, canvasOffsetY: number = 0
   ) {
     this.canvas = document.getElementById(canvasId);
@@ -31,6 +34,8 @@ export class VirtualCanvas {
     this.virtualCanvasHeight = virtualCanvasHeight;
     this.canvasOffsetX = canvasOffsetX;
     this.canvasOffsetY = canvasOffsetY;
+
+    this.opentype = opentype;
   }
 
   public setCanvasSize(canvasWidth: number, canvasHeight: number) {

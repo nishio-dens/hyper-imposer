@@ -38,7 +38,8 @@ export class Renderer {
 
     // TODO: 実際のcanvasの大きさが16:9 でないときは OffsetX, OffsetYを渡さなければならない
     this.canvas = new VirtualCanvas(
-      canvasId, canvasWidth, canvasHeight, this.virtualCanvasWidth, this.virtualCanvasHeight
+      canvasId, canvasWidth, canvasHeight, this.virtualCanvasWidth, this.virtualCanvasHeight,
+      opentype
     );
 
     this.fontTable = new FontTable();
