@@ -3,7 +3,7 @@
 import { AspectRatio } from "./aspectRatio";
 import { VirtualCanvasSize } from "./virtualCanvasSize";
 import { VirtualCanvas } from "./virtualCanvas";
-import { MetricsTable } from "../fonts/metricsTable";
+import { FontTable } from "../fonts/fontTable";
 import { CaptionRenderer } from "./captionRenderer";
 import { CaptionSafeZoneRenderer } from "./captionSafeZoneRenderer";
 import { CaptionAlignment } from "../captions/captionAlignment";
@@ -13,7 +13,7 @@ import { CaptionSafeZone } from "../captions/captionSafeZone";
 export class Renderer {
   // canvas
   private canvas: VirtualCanvas;
-  private metricsTable: MetricsTable;
+  private fontTable: FontTable;
   private captionRenderer: CaptionRenderer;
   private captionSafeZone: CaptionSafeZone;
   private captionSafeZoneRenderer: CaptionSafeZoneRenderer;
@@ -27,7 +27,7 @@ export class Renderer {
   constructor(canvasId: string, canvasWidth: number,
               canvasHeight: number, aspectRatio: AspectRatio,
               fontName: string, fontSize: number,
-              fontMetrics: string) {
+              opentype: any) {
     if (aspectRatio === AspectRatio.AR16_9) {
       this.virtualCanvasWidth = VirtualCanvasSize.AR16_9_WIDTH;
       this.virtualCanvasHeight = VirtualCanvasSize.AR16_9_HEIGHT;
@@ -41,8 +41,8 @@ export class Renderer {
       canvasId, canvasWidth, canvasHeight, this.virtualCanvasWidth, this.virtualCanvasHeight
     );
 
-    this.metricsTable = new MetricsTable();
-    this.metricsTable.initializeMetrics(fontMetrics, this.canvas);
+    this.fontTable = new FontTable();
+    this.fontTable.initialize(opentype, this.canvas);
 
     this.captionSafeZone = new CaptionSafeZone(this.canvas);
 
@@ -54,7 +54,7 @@ export class Renderer {
 
   public initializeTypeSetter() {
     this.captionRenderer = new CaptionRenderer(
-      this.canvas, this.metricsTable, this.captionSafeZone, this.fontName, this.fontSize
+      this.canvas, this.fontTable, this.captionSafeZone, this.fontName, this.fontSize
     );
   }
 

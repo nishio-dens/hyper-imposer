@@ -27,10 +27,10 @@ export class Bootstrap {
 
   public initializeRenderer(
     canvasId: string, width: number, height: number, aspect: AspectRatio,
-    fontName: string, fontSize: number, fontMetrics: string
+    fontName: string, fontSize: number
   ) {
     this.renderer = new Renderer(
-      canvasId, width, height, aspect, fontName, fontSize, fontMetrics
+      canvasId, width, height, aspect, fontName, fontSize, this.opentype
     );
     this.renderer.setDebugMode(this.isDebugMode());
 

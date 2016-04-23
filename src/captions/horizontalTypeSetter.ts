@@ -1,7 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import { Metrics } from "../fonts/metrics";
-import { MetricsTable } from "../fonts/metricsTable";
+import { FontTable } from "../fonts/fontTable";
 import { CaptionChar } from "../captions/captionChar";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
@@ -9,9 +9,9 @@ import { CaptionSafeZone } from "../captions/captionSafeZone";
 import { TypeSetter } from "../captions/typeSetter";
 
 export class HorizontalTypeSetter extends TypeSetter {
-  constructor(captionSafeZone: CaptionSafeZone, fontSize: number, metricsTable: MetricsTable) {
+  constructor(captionSafeZone: CaptionSafeZone, fontSize: number, fontTable: FontTable) {
     super(
-      captionSafeZone, fontSize, metricsTable
+      captionSafeZone, fontSize, fontTable
     );
   }
 

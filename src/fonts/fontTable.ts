@@ -3,7 +3,7 @@
 import { Metrics } from "./metrics";
 import { VirtualCanvas } from "../renderer/virtualCanvas";
 
-export class MetricsTable {
+export class FontTable {
   // Metrics情報を格納する keyはGlyphID(GID)
   private table : { [key: number] : Metrics };
   // 文字コード と GIDのペア
@@ -11,7 +11,7 @@ export class MetricsTable {
   private virtualCanvas: VirtualCanvas;
   private fontResolution;
 
-  public initializeMetrics(
+  public initialize(
     metricsJson, virtualCanvas: VirtualCanvas, fontResolution: number = 1000
   ) {
     this.virtualCanvas = virtualCanvas;

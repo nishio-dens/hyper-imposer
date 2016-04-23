@@ -1,7 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
 import { Metrics } from "../fonts/metrics";
-import { MetricsTable } from "../fonts/metricsTable";
+import { FontTable } from "../fonts/fontTable";
 import { VirtualCanvas } from "./virtualCanvas";
 import { CaptionChar } from "../captions/captionChar";
 import { CaptionAlignment } from "../captions/captionAlignment";
@@ -12,7 +12,7 @@ import { VerticalTypeSetter } from "../captions/verticalTypeSetter";
 
 export class CaptionRenderer {
   private canvas: VirtualCanvas;
-  private metricsTable: MetricsTable;
+  private fontTable: FontTable;
   private captionSafeZone: CaptionSafeZone;
   private outerFrameColor = "#00ff00";
   private boundingBoxColor = "#0000ff";
@@ -25,20 +25,20 @@ export class CaptionRenderer {
   private renderingTexts: any;
 
   constructor(
-    canvas: VirtualCanvas, metricsTable: MetricsTable,
+    canvas: VirtualCanvas, fontTable: FontTable,
     captionSafeZone: CaptionSafeZone,
     fontName: string, fontSize: number
   ) {
-    this.initialize(canvas, metricsTable, captionSafeZone, fontName, fontSize);
+    this.initialize(canvas, fontTable, captionSafeZone, fontName, fontSize);
   }
 
   public initialize(
-    canvas: VirtualCanvas, metricsTable: MetricsTable,
+    canvas: VirtualCanvas, fontTable: FontTable,
     captionSafeZone: CaptionSafeZone,
     fontName: string, fontSize: number
   ) {
     this.canvas = canvas;
-    this.metricsTable = metricsTable;
+    this.fontTable = fontTable;
     this.captionSafeZone = captionSafeZone;
 
     this.fontName = fontName;
@@ -47,12 +47,12 @@ export class CaptionRenderer {
     this.horizontalTypeSetter = new HorizontalTypeSetter(
       this.captionSafeZone,
       this.fontSize,
-      this.metricsTable
+      this.fontTable
     );
     this.verticalTypeSetter = new VerticalTypeSetter(
       this.captionSafeZone,
       this.fontSize,
-      this.metricsTable
+      this.fontTable
     );
   }
 
