@@ -17,7 +17,8 @@
     "start": "npm run server"
   },
   "dependencies": {
-    "jquery": "^2.2.3"
+    "jquery": "^2.2.3",
+    "opentype.js": "^0.6.2"
   },
   "devDependencies": {
     "css-loader": "^0.23.0",
