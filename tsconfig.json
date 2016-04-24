@@ -12,6 +12,7 @@
     "./src/bootstrap.ts",
     "./src/captions/captionAlignment.ts",
     "./src/captions/captionChar.ts",
+    "./src/captions/captionLine.ts",
     "./src/captions/captionPosition.ts",
     "./src/captions/captionSafeZone.ts",
     "./src/captions/horizontalTypeSetter.ts",
