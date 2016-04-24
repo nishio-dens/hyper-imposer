@@ -30,38 +30,30 @@ export class VerticalTypeSetter extends TypeSetter {
     // TODO: 先頭「 等の約物位置調整対応
     var verticalText = this.convertCharToVertChar(text);
     var textMetrics = this.getTextMetrics(verticalText, true);
-    this.convertToVerticalRotateMetrics(textMetrics);
+    var renderText = this.convertMetricsToCaptionCharWithoutRenderPoint(verticalText, textMetrics);
+    this.convertVerticalRotateMetrics(renderText);
 
     var startPosition = this.calcOneLineInitialPoint(
       textMetrics, position, alignment
     );
     var startX = startPosition.x, startY = startPosition.y;
 
-    var renderText = [];
     var currentXPosition = startX;
     var currentYPosition = startY;
 
-    for (var i = 0; i < verticalText.length; i++) {
-      var m : Metrics = textMetrics[i];
+    for (var i = 0; i < renderText.length; i++) {
+      var cc : CaptionChar = renderText[i];
+      var m : Metrics = renderText[i].metrics;
       var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
       var startX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
       var startY = currentYPosition;
       var charStartX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
       var charStartY = currentYPosition + m.hby + m.vby;
-      var width = m.ha;
-      var height = m.va;
 
-      var cc  = new CaptionChar({
-        char: verticalText[i],
-        startX: startX,
-        startY: startY,
-        charStartX: charStartX,
-        charStartY: charStartY,
-        width: width,
-        height: height,
-        metrics: m
-      });
-      renderText.push(cc);
+      cc.startX = startX;
+      cc.startY = startY;
+      cc.charStartX = charStartX;
+      cc.charStartY = charStartY;
 
       currentYPosition += m.va;
     }
@@ -88,11 +80,52 @@ export class VerticalTypeSetter extends TypeSetter {
     return convertedText;
   }
 
-  private convertToVerticalRotateMetrics(metrics: Metrics[]) {
-    for (var i = 0; i < metrics.length; i++) {
-      var char : string = String.fromCharCode(metrics[i].code);
+  /**
+  * MetricsをCaptionCharに変換する
+  * ただし、レンダリング開始ポイントは設定しない
+  */
+  private convertMetricsToCaptionCharWithoutRenderPoint(
+    verticalText: string, textMetrics: Metrics[]
+  ) : CaptionChar[] {
+    var renderText : CaptionChar[] = [];
+
+    for (var i = 0; i < verticalText.length; i++) {
+      var m : Metrics = textMetrics[i];
+      var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
+      var startX = 0;
+      var startY = 0;
+      var charStartX = 0;
+      var charStartY = 0;
+      var width = m.width;
+      var height = m.height;
+
+      var cc  = new CaptionChar({
+        char: verticalText[i],
+        startX: startX,
+        startY: startY,
+        charStartX: charStartX,
+        charStartY: charStartY,
+        width: width,
+        height: height,
+        va: m.va,
+        ha: m.ha,
+        metrics: m
+      });
+      renderText.push(cc);
+    }
+
+    return renderText;
+  }
+
+  /**
+  * 90度回転対象の文字を回転する
+  */
+  private convertVerticalRotateMetrics(text: CaptionChar[]) {
+    for (var i = 0; i < text.length; i++) {
+      var char : string = String.fromCharCode(text[i].metrics.code);
       if (VerticalRotateCharacter.isRotateCharacter(char)) {
-        console.log("CALL " + char);
+        text[i].rotateRight();
+        console.log("CALL " + text[i].metrics.code + " " + text[i].height);
       }
     }
   }

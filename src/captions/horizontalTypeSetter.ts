@@ -43,8 +43,10 @@ export class HorizontalTypeSetter extends TypeSetter {
         startY: currentYPosition - this.baseJapaneseCharacterSize,
         charStartX: currentXPosition,
         charStartY: currentYPosition + m.hby + m.vby - this.baseJapaneseCharacterSize,
-        width: m.ha,
-        height: m.va,
+        width: m.width,
+        height: m.height,
+        va: m.va,
+        ha: m.ha,
         metrics: m
       });
       renderText.push(cc);
