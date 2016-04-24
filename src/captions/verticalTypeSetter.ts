@@ -108,7 +108,6 @@ export class VerticalTypeSetter extends TypeSetter {
       var char : string = String.fromCharCode(text[i].metrics.code);
       if (VerticalRotateCharacter.isRotateCharacter(char)) {
         text[i].rotateRight(this.baseJapaneseCharacterSize);
-        console.log("CALL " + String.fromCharCode(text[i].metrics.code) + " " + text[i].height);
       }
     }
   }

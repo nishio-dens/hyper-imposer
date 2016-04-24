@@ -9,6 +9,7 @@ import { CaptionSafeZoneRenderer } from "./captionSafeZoneRenderer";
 import { CaptionAlignment } from "../captions/captionAlignment";
 import { CaptionPosition } from "../captions/captionPosition";
 import { CaptionSafeZone } from "../captions/captionSafeZone";
+import { CaptionXmlParser } from "../captions/captionXmlParser";
 
 export class Renderer {
   // canvas
@@ -84,8 +85,14 @@ export class Renderer {
       "「美しい にmnj:。", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
     );
     this.captionRenderer.addCaptionText(
-      "日本語の、あぁ<BR>二行です", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+      "<I>テ<B>スト</B><R VALUE='とうきょう'>東京</R>で<BR>した</I>",
+      CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
+    // TODO 仮
+    CaptionXmlParser.parseXml(
+      "<I>テ<B>スト</B><R VALUE='とうきょう'>東京</R></I><BR /><I>でした</I>"
+    );
+    // TODO END
     this.captionRenderer.render();
 
     if (this.isDebug) {
