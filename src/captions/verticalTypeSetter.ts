@@ -108,7 +108,7 @@ export class VerticalTypeSetter extends TypeSetter {
       var char : string = String.fromCharCode(text[i].metrics.code);
       if (VerticalRotateCharacter.isRotateCharacter(char)) {
         text[i].rotateRight(this.baseJapaneseCharacterSize);
-        console.log("CALL " + text[i].metrics.code + " " + text[i].height);
+        console.log("CALL " + String.fromCharCode(text[i].metrics.code) + " " + text[i].height);
       }
     }
   }
@@ -132,7 +132,7 @@ export class VerticalTypeSetter extends TypeSetter {
 
     return {
       x: startX,
-      y: startY
+      y: startY,
     };
   }
 
@@ -144,11 +144,10 @@ export class VerticalTypeSetter extends TypeSetter {
 
     for (var i = 0; i < renderText.length; i++) {
       var cc : CaptionChar = renderText[i];
-      var m : Metrics = renderText[i].metrics;
       cc.renderingOffsetX = currentXPosition;
       cc.renderingOffsetY = currentYPosition;
 
-      currentYPosition += m.va;
+      currentYPosition += cc.va;
     }
   }
 }

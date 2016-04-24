@@ -86,12 +86,30 @@ export class VirtualCanvas {
   public drawChar(char: CaptionChar, fontSize: number) {
     var glyph = this.opentype.glyphs.get(char.metrics.gid);
     var ctx = this.getCanvasContext();
-    glyph.draw(
-      ctx,
-      this.virtualXToX(char.renderingCharStartX),
-      this.virtualYToY(char.renderingCharStartY),
-      fontSize
-    );
+    ctx.save();
+
+    var renderingX = this.virtualXToX(char.renderingCharStartX);
+    var renderingY = this.virtualYToY(char.renderingCharStartY);
+    if (char.degreeOfRotation === 90) {
+      // 右90度回転対応
+      ctx.translate(0, 0);
+      ctx.rotate(char.degreeOfRotation * Math.PI / 180);
+      // TODO: 0.86 という値は一体どこから導き出された値なのか
+      var offsetY = fontSize * 0.86;
+      ctx.translate(
+        renderingY - offsetY,
+        -1.0 * (
+          this.canvasWidth -
+          this.virtualYToY(this.virtualCanvasWidth - char.renderingOffsetX)
+        )
+      );
+      ctx.translate(0, 0 + offsetY);
+      renderingX = 0;
+      renderingY = 0;
+    }
+
+    glyph.draw(ctx, renderingX, renderingY, fontSize);
+    ctx.restore();
   }
 
   public xToVirtualX(point: number): number {
