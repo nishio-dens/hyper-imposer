@@ -107,8 +107,8 @@ export class CaptionRenderer {
   */
   private renderCharOuterFrame(char: CaptionChar) {
     this.canvas.drawRect(
-      char.startX, char.startY,
-      char.metrics.ha, char.metrics.va,
+      char.renderingStartX, char.renderingStartY,
+      char.ha, char.va,
       this.outerFrameColor, this.projectLineWidth
     );
   }
@@ -117,9 +117,18 @@ export class CaptionRenderer {
   * 文字のバウンディングボックスを描画する
   */
   private renderCharBoundingBox(char: CaptionChar) {
+    var startX = char.renderingStartX;
+    var startY = char.renderingStartY;
+    if (char.degreeOfRotation === 90) {
+      startX = startX + (char.metrics.va - char.metrics.vby - char.metrics.height);
+      startY += char.metrics.hbx;
+    } else {
+      startX += char.metrics.hbx;
+      startY += char.metrics.vby;
+    }
     this.canvas.drawRect(
-      char.startX + char.metrics.hbx, char.startY + char.metrics.vby,
-      char.metrics.width, char.metrics.height,
+      startX, startY,
+      char.width, char.height,
       this.boundingBoxColor, this.projectLineWidth
     );
   }

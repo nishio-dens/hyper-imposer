@@ -30,33 +30,14 @@ export class VerticalTypeSetter extends TypeSetter {
     // TODO: 先頭「 等の約物位置調整対応
     var verticalText = this.convertCharToVertChar(text);
     var textMetrics = this.getTextMetrics(verticalText, true);
-    var renderText = this.convertMetricsToCaptionCharWithoutRenderPoint(verticalText, textMetrics);
+    var renderText = this.convertMetricsToCaptionCharWithoutRenderOffset(verticalText, textMetrics);
     this.convertVerticalRotateMetrics(renderText);
 
     var startPosition = this.calcOneLineInitialPoint(
       textMetrics, position, alignment
     );
     var startX = startPosition.x, startY = startPosition.y;
-
-    var currentXPosition = startX;
-    var currentYPosition = startY;
-
-    for (var i = 0; i < renderText.length; i++) {
-      var cc : CaptionChar = renderText[i];
-      var m : Metrics = renderText[i].metrics;
-      var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
-      var startX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
-      var startY = currentYPosition;
-      var charStartX = currentXPosition - this.baseJapaneseCharacterSize + offsetX;
-      var charStartY = currentYPosition + m.hby + m.vby;
-
-      cc.startX = startX;
-      cc.startY = startY;
-      cc.charStartX = charStartX;
-      cc.charStartY = charStartY;
-
-      currentYPosition += m.va;
-    }
+    this.setCaptionCharRenderingPoint(renderText, startX, startY);
 
     return renderText;
   }
@@ -82,9 +63,9 @@ export class VerticalTypeSetter extends TypeSetter {
 
   /**
   * MetricsをCaptionCharに変換する
-  * ただし、レンダリング開始ポイントは設定しない
+  * ただし、レンダリング開始ポイントは左上として仮の値を設定する
   */
-  private convertMetricsToCaptionCharWithoutRenderPoint(
+  private convertMetricsToCaptionCharWithoutRenderOffset(
     verticalText: string, textMetrics: Metrics[]
   ) : CaptionChar[] {
     var renderText : CaptionChar[] = [];
@@ -92,10 +73,10 @@ export class VerticalTypeSetter extends TypeSetter {
     for (var i = 0; i < verticalText.length; i++) {
       var m : Metrics = textMetrics[i];
       var offsetX = (this.baseJapaneseCharacterSize - m.ha) / 2.0;
-      var startX = 0;
+      var startX = offsetX - this.baseJapaneseCharacterSize;
       var startY = 0;
-      var charStartX = 0;
-      var charStartY = 0;
+      var charStartX = offsetX - this.baseJapaneseCharacterSize;
+      var charStartY = m.hby + m.vby;
       var width = m.width;
       var height = m.height;
 
@@ -109,6 +90,8 @@ export class VerticalTypeSetter extends TypeSetter {
         height: height,
         va: m.va,
         ha: m.ha,
+        renderingOffsetX: 0,
+        renderingOffsetY: 0,
         metrics: m
       });
       renderText.push(cc);
@@ -124,7 +107,7 @@ export class VerticalTypeSetter extends TypeSetter {
     for (var i = 0; i < text.length; i++) {
       var char : string = String.fromCharCode(text[i].metrics.code);
       if (VerticalRotateCharacter.isRotateCharacter(char)) {
-        text[i].rotateRight();
+        text[i].rotateRight(this.baseJapaneseCharacterSize);
         console.log("CALL " + text[i].metrics.code + " " + text[i].height);
       }
     }
@@ -151,5 +134,21 @@ export class VerticalTypeSetter extends TypeSetter {
       x: startX,
       y: startY
     };
+  }
+
+  private setCaptionCharRenderingPoint(
+    renderText: CaptionChar[], renderStartX: number, renderStartY: number
+  ) {
+    var currentXPosition = renderStartX;
+    var currentYPosition = renderStartY;
+
+    for (var i = 0; i < renderText.length; i++) {
+      var cc : CaptionChar = renderText[i];
+      var m : Metrics = renderText[i].metrics;
+      cc.renderingOffsetX = currentXPosition;
+      cc.renderingOffsetY = currentYPosition;
+
+      currentYPosition += m.va;
+    }
   }
 }

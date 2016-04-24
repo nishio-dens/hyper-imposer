@@ -39,14 +39,16 @@ export class HorizontalTypeSetter extends TypeSetter {
       var m : Metrics = textMetrics[i];
       var cc  = new CaptionChar({
         char: text[i],
-        startX: currentXPosition,
-        startY: currentYPosition - this.baseJapaneseCharacterSize,
-        charStartX: currentXPosition,
-        charStartY: currentYPosition + m.hby + m.vby - this.baseJapaneseCharacterSize,
+        startX: 0,
+        startY: 0 - this.baseJapaneseCharacterSize,
+        charStartX: 0,
+        charStartY: 0 + m.hby + m.vby - this.baseJapaneseCharacterSize,
         width: m.width,
         height: m.height,
         va: m.va,
         ha: m.ha,
+        renderingOffsetX: currentXPosition,
+        renderingOffsetY: currentYPosition,
         metrics: m
       });
       renderText.push(cc);

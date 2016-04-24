@@ -88,8 +88,8 @@ export class VirtualCanvas {
     var ctx = this.getCanvasContext();
     glyph.draw(
       ctx,
-      this.virtualXToX(char.charStartX),
-      this.virtualYToY(char.charStartY),
+      this.virtualXToX(char.renderingCharStartX),
+      this.virtualYToY(char.renderingCharStartY),
       fontSize
     );
   }
