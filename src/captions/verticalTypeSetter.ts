@@ -22,7 +22,6 @@ export class VerticalTypeSetter extends TypeSetter {
   public calcDrawingPosition(
     text: string, position: CaptionPosition, alignment: CaptionAlignment
   ) : CaptionChar[] {
-    // TODO: 回転文字対応
     // TODO: テキストタグ対応 <G>23</G>や<RB VALUE="あ">嗚</RB>など
     // TODO: 複数行対応
     // TODO: ルビ

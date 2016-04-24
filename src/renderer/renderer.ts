@@ -84,7 +84,7 @@ export class Renderer {
       "「美しい にmnj:。", CaptionPosition.BOTTOM_LEFT, CaptionAlignment.START, false, true
     );
     this.captionRenderer.addCaptionText(
-      "回転moji123", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
+      "回転 moji123", CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     this.captionRenderer.render();
 

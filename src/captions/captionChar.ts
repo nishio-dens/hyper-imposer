@@ -79,7 +79,6 @@ export class CaptionChar {
 
   /**
   * 文字を90度右回転
-  * ただし、文字はcanvas左上にあるものとしてPositionを変換する
   */
   public rotateRight(baseJapaneseCharacterSize: number) {
     this._degreeOfRotation = 90;
