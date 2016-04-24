@@ -27,6 +27,7 @@ export class VerticalTypeSetter extends TypeSetter {
     // TODO: ルビ
     // TODO: 組み文字
     // TODO: 先頭「 等の約物位置調整対応
+    // TODO: 90度回転した欧字の前後に二分アキを入れる
     var verticalText = this.convertCharToVertChar(text);
     var textMetrics = this.getTextMetrics(verticalText, true);
     var renderText = this.convertMetricsToCaptionCharWithoutRenderOffset(verticalText, textMetrics);
