@@ -89,9 +89,10 @@ export class Renderer {
       CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     // TODO 仮
-    CaptionXmlParser.parseXml(
+    var result = new CaptionXmlParser().parseXml(
       "<I>テ<B>スト</B><R VALUE='とうきょう'>東京</R></I><BR /><I>でした</I>"
     );
+    console.log(result);
     // TODO END
     this.captionRenderer.render();
 
