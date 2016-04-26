@@ -16,9 +16,18 @@ export class CaptionXmlParser {
     if (children.length > 0) {
       for (var i = 0; i < children.length; i++) {
         var n = children[i];
+        var attributes = [];
+        if (n.attributes) {
+          for (var j = 0; j < n.attributes.length; j++) {
+            attributes = attributes.concat(
+              { name: n.attributes[j].name, value: n.attributes[j].value }
+            );
+          }
+        }
         var p = innerNodes.concat({
           nodeType: n.nodeName,
-          nodeValue: n.nodeValue
+          nodeValue: n.nodeValue,
+          attributes: attributes
         });
 
         results = results.concat(this.createXmlTree(n, p));
