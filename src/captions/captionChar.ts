@@ -17,6 +17,8 @@ export class CaptionChar {
   private _metrics: Metrics;
   private _replaceFromChar: string;
   private _degreeOfRotation: number = 0;
+  private _isBold : boolean = false;
+  private _isItalic : boolean = false;
 
   constructor(params: {
     char: string,
@@ -30,7 +32,7 @@ export class CaptionChar {
     ha: number,
     renderingOffsetX: number,
     renderingOffsetY: number,
-    metrics: Metrics,
+    metrics: Metrics
   }) {
     this._char = params.char;
     this._startX = params.startX;
@@ -60,6 +62,8 @@ export class CaptionChar {
   get metrics(): Metrics { return this._metrics; }
   get replaceFromChar(): string { return this._replaceFromChar; }
   get degreeOfRotation(): number { return this._degreeOfRotation; }
+  get isBold(): boolean { return this._isBold; }
+  get isItalic(): boolean { return this._isItalic; }
 
   get renderingStartX(): number { return this._startX + this.renderingOffsetX; }
   get renderingStartY(): number { return this._startY + this.renderingOffsetY; }
@@ -76,6 +80,8 @@ export class CaptionChar {
   set ha(value: number) { this._ha = value; }
   set renderingOffsetX(value: number) { this._renderingOffsetX = value; }
   set renderingOffsetY(value: number) { this._renderingOffsetY = value; }
+  set isBold(value: boolean) { this._isBold = value; }
+  set isItalic(value: boolean) { this._isItalic = value; }
 
   /**
   * 文字を90度右回転
