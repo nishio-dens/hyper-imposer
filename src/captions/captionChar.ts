@@ -3,22 +3,25 @@
 import { Metrics } from "../fonts/metrics";
 
 export class CaptionChar {
-  private _char: string;
-  private _startX: number;
-  private _startY: number;
-  private _charStartX: number;
-  private _charStartY: number;
-  private _width: number;
-  private _height: number;
-  private _va: number;
-  private _ha: number;
-  private _renderingOffsetX: number;
-  private _renderingOffsetY: number;
-  private _metrics: Metrics;
-  private _replaceFromChar: string;
-  private _degreeOfRotation: number = 0;
-  private _isBold : boolean = false;
-  private _isItalic : boolean = false;
+  private _char?: string;
+  private _startX?: number;
+  private _startY?: number;
+  private _charStartX?: number;
+  private _charStartY?: number;
+  private _width?: number;
+  private _height?: number;
+  private _va?: number;
+  private _ha?: number;
+  private _renderingOffsetX?: number;
+  private _renderingOffsetY?: number;
+  private _metrics?: Metrics;
+  private _replaceFromChar?: string;
+  private _degreeOfRotation?: number = 0;
+  private _isBold?: boolean = false;
+  private _isItalic?: boolean = false;
+  private _isReturn: boolean = false;
+  private _parentGroupNode: any;
+  private _parentRubyNode: any; 
 
   constructor(params: {
     char: string,
@@ -64,6 +67,9 @@ export class CaptionChar {
   get degreeOfRotation(): number { return this._degreeOfRotation; }
   get isBold(): boolean { return this._isBold; }
   get isItalic(): boolean { return this._isItalic; }
+  get isReturn(): boolean { return this._isReturn; }
+  get parentRubyNode(): any { return this._parentRubyNode; }
+  get parentGroupNode(): any { return this._parentGroupNode; }
 
   get renderingStartX(): number { return this._startX + this.renderingOffsetX; }
   get renderingStartY(): number { return this._startY + this.renderingOffsetY; }
@@ -82,6 +88,9 @@ export class CaptionChar {
   set renderingOffsetY(value: number) { this._renderingOffsetY = value; }
   set isBold(value: boolean) { this._isBold = value; }
   set isItalic(value: boolean) { this._isItalic = value; }
+  set isReturn(value: boolean) { this._isReturn = value; }
+  set parentRubyNode(value: any) { this._parentRubyNode = value; }
+  set parentGroupNode(value: any) { this._parentGroupNode = value; }
 
   /**
   * 文字を90度右回転

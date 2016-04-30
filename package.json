@@ -35,7 +35,7 @@
     "tsconfig-lint": "^0.2.0",
     "tslint": "^3.2.0",
     "tslint-loader": "^2.1.0",
-    "typescript": "^1.7.3",
+    "typescript": "^1.8.3",
     "typings": "^0.7.12",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.9",

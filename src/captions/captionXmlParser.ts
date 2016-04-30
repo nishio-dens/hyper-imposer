@@ -1,5 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
+import {CaptionChar} from "./captionChar";
+
 export class CaptionXmlParser {
   private currentHid;
 
@@ -12,10 +14,13 @@ export class CaptionXmlParser {
     var dom = parser.parseFromString("<ROOT>" + text + "</ROOT>", "text/xml");
     var node = (<any>dom).children[0];
 
-    return this.createXmlTree(node, []);
+    var splittedNodes = this.splitTextToNode(node, []);
+    var captionChars = this.nodeToCaptionChar(splittedNodes);
+
+    return captionChars;
   }
 
-  private createXmlTree(node, innerNodes: any[] = []) {
+  private splitTextToNode(node, innerNodes: any[] = []) {
     var children = node.childNodes;
     var results = [];
 
@@ -39,7 +44,7 @@ export class CaptionXmlParser {
           attributes: attributes
         });
 
-        results = results.concat(this.createXmlTree(n, p));
+        results = results.concat(this.splitTextToNode(n, p));
       }
     } else {
       results = [
@@ -55,10 +60,27 @@ export class CaptionXmlParser {
     return results;
   }
 
+
   private setNodeIdIfNotExists(node) {
     if (node.id === undefined || node.id === "") {
       node.id = this.currentHid;
       this.currentHid += 1;
     }
+  }
+
+  private nodeToCaptionChar(nodes) {
+    var chars : CaptionChar[] = [];
+    
+    for (var i = 0; i < nodes.length; i++) {
+      var node = nodes[i];
+      if (node.nodeType == "#text") {
+        
+      } else if (node.nodeType === "BR") {
+        var char = new CaptionChar({char: ""});
+        char.isReturn = true;
+        chars.push(char);
+      }
+    }
+    return chars;
   }
 }
