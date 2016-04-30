@@ -10,6 +10,7 @@
   },
   "files": [
     "./src/bootstrap.ts",
+    "./src/captions/captionText.ts",
     "./src/captions/captionAlignment.ts",
     "./src/captions/captionChar.ts",
     "./src/captions/captionLine.ts",
