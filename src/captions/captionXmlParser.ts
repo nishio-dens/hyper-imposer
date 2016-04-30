@@ -16,6 +16,7 @@ export class CaptionXmlParser {
 
     var splittedNodes = this.splitTextToNode(node, []);
     var captionChars = this.nodeToCaptionChar(splittedNodes);
+    // TODO: captionChars to captionText
 
     return captionChars;
   }
@@ -74,8 +75,28 @@ export class CaptionXmlParser {
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
       if (node.nodeType === "#text") {
-        for (var j = 0; j < node.length; j++) {
+        for (var j = 0; j < node.nodeValue.length; j++) {
           var char = new CaptionChar({char: node.nodeValue[j]});
+          for (var k = 0; k < node.innerNodes.length - 1; k++) {
+            var parentNode = node.innerNodes[k];
+            switch (parentNode.nodeType) {
+              case "I":
+              char.isItalic = true;
+              break;
+
+              case "B":
+              char.isBold = true;
+              break;
+
+              case "R":
+              char.parentRubyNode = parentNode;
+              break;
+
+              case "G":
+              char.parentGroupNode = parentNode;
+              break;
+            }
+          }
           chars.push(char);
         }
       } else if (node.nodeType === "BR") {
