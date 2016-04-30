@@ -70,13 +70,16 @@ export class CaptionXmlParser {
 
   private nodeToCaptionChar(nodes) {
     var chars : CaptionChar[] = [];
-    
+
     for (var i = 0; i < nodes.length; i++) {
       var node = nodes[i];
-      if (node.nodeType == "#text") {
-        
+      if (node.nodeType === "#text") {
+        for (var j = 0; j < node.length; j++) {
+          var char = new CaptionChar({char: node.nodeValue[j]});
+          chars.push(char);
+        }
       } else if (node.nodeType === "BR") {
-        var char = new CaptionChar({char: ""});
+        var char = new CaptionChar({});
         char.isReturn = true;
         chars.push(char);
       }

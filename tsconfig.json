@@ -10,12 +10,12 @@
   },
   "files": [
     "./src/bootstrap.ts",
-    "./src/captions/captionText.ts",
     "./src/captions/captionAlignment.ts",
     "./src/captions/captionChar.ts",
     "./src/captions/captionLine.ts",
     "./src/captions/captionPosition.ts",
     "./src/captions/captionSafeZone.ts",
+    "./src/captions/captionText.ts",
     "./src/captions/captionXmlParser.ts",
     "./src/captions/horizontalTypeSetter.ts",
     "./src/captions/typeSetter.ts",

@@ -3,39 +3,39 @@
 import { Metrics } from "../fonts/metrics";
 
 export class CaptionChar {
-  private _char?: string;
-  private _startX?: number;
-  private _startY?: number;
-  private _charStartX?: number;
-  private _charStartY?: number;
-  private _width?: number;
-  private _height?: number;
-  private _va?: number;
-  private _ha?: number;
-  private _renderingOffsetX?: number;
-  private _renderingOffsetY?: number;
-  private _metrics?: Metrics;
-  private _replaceFromChar?: string;
-  private _degreeOfRotation?: number = 0;
-  private _isBold?: boolean = false;
-  private _isItalic?: boolean = false;
+  private _char: string;
+  private _startX: number;
+  private _startY: number;
+  private _charStartX: number;
+  private _charStartY: number;
+  private _width: number;
+  private _height: number;
+  private _va: number;
+  private _ha: number;
+  private _renderingOffsetX: number;
+  private _renderingOffsetY: number;
+  private _metrics: Metrics;
+  private _replaceFromChar: string;
+  private _degreeOfRotation: number = 0;
+  private _isBold : boolean = false;
+  private _isItalic : boolean = false;
   private _isReturn: boolean = false;
   private _parentGroupNode: any;
   private _parentRubyNode: any; 
 
   constructor(params: {
-    char: string,
-    startX: number,
-    startY: number,
-    charStartX: number,
-    charStartY: number,
-    width: number,
-    height: number,
-    va: number,
-    ha: number,
-    renderingOffsetX: number,
-    renderingOffsetY: number,
-    metrics: Metrics
+    char?: string,
+    startX?: number,
+    startY?: number,
+    charStartX?: number,
+    charStartY?: number,
+    width?: number,
+    height?: number,
+    va?: number,
+    ha?: number,
+    renderingOffsetX?: number,
+    renderingOffsetY?: number,
+    metrics?: Metrics
   }) {
     this._char = params.char;
     this._startX = params.startX;
