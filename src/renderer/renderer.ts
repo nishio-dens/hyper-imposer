@@ -90,7 +90,7 @@ export class Renderer {
     );
     // TODO 仮
     var result = new CaptionXmlParser().parseXml(
-      "<I><R VALUE='とうきょう'>東<B>京</B>は晴れ</R><BR /></I>"
+      "<I><RA VALUE='とうきょう'>東<B>京</B></RA>は<G>23</G><B><RB VALUE='は'>晴</RB>れ</B><BR /></I>"
     );
     debugger
     console.log(result);

@@ -17,7 +17,7 @@ export class CaptionXmlParser {
 
     var splittedNodes = this.convertTextToNode(node, []);
     var captionChars = this.nodeToCaptionChar(splittedNodes);
-    var captionText = this.groupByRuby(captionChars);
+    var captionText = this.groupByParentNode(captionChars);
     // TODO: captionChars to captionText
 
     return captionText;
@@ -90,7 +90,11 @@ export class CaptionXmlParser {
               char.isBold = true;
               break;
 
-              case "R":
+              case "RA":
+              char.parentRubyNode = parentNode;
+              break;
+
+              case "RB":
               char.parentRubyNode = parentNode;
               break;
 
@@ -110,8 +114,52 @@ export class CaptionXmlParser {
     return chars;
   }
 
-  private groupByRuby(captionChar: CaptionChar[]) : CaptionText[] {
+  private groupByParentNode(captionChars: CaptionChar[]) : CaptionText[] {
     var groupingText = [];
-    return null;
+    var parentNode = null;
+    for (var i = 0, j = 0; i < captionChars.length; i++) {
+      var c = captionChars[i];
+      if (parentNode === c.parentRubyNode || parentNode === c.parentGroupNode) {
+        if (groupingText[j] === null) {
+          groupingText[j] = [];
+        }
+        groupingText[j].push(c);
+      } else {
+        if (c.parentRubyNode) {
+          j += 1;
+          groupingText[j] = [c];
+          parentNode = c.parentRubyNode;
+        } else if (c.parentGroupNode) {
+          j += 1;
+          groupingText[j] = [c];
+          parentNode = c.parentGroupNode;
+        } else {
+          if (parentNode !== null) {
+            j += 1;
+            groupingText[j] = [];
+          }
+          parentNode = null;
+          groupingText[j].push(c);
+        }
+      }
+    }
+
+    var captionTexts = [];
+    for (var i = 0; i < groupingText.length; i++) {
+      if (groupingText[i]) {
+        var text = new CaptionText();
+        text.chars = groupingText[i];
+        captionTexts.push(text);
+      }
+    }
+    return captionTexts;
+  }
+
+  private textToCaptionChar(text: string) : CaptionChar[] {
+    var results = [];
+    for (var i = 0; i < text.length; i++) {
+      results.push(new CaptionChar({char: text[i]}));
+    }
+    return results;
   }
 }
