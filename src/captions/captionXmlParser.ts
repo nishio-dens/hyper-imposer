@@ -10,7 +10,7 @@ export class CaptionXmlParser {
     this.currentHid = new Date().getTime();
   }
 
-  public parseXml(text: string, parents = []) {
+  public parseCaptionXml(text: string, parents = []) {
     var parser = new DOMParser();
     var dom = parser.parseFromString("<ROOT>" + text + "</ROOT>", "text/xml");
     var node = (<any>dom).children[0];
@@ -18,7 +18,6 @@ export class CaptionXmlParser {
     var splittedNodes = this.convertTextToNode(node, []);
     var captionChars = this.nodeToCaptionChar(splittedNodes);
     var captionText = this.groupByParentNode(captionChars);
-    // TODO: captionChars to captionText
 
     return captionText;
   }
@@ -136,6 +135,8 @@ export class CaptionXmlParser {
         } else {
           if (parentNode !== null) {
             j += 1;
+          }
+          if (groupingText[j] === undefined) {
             groupingText[j] = [];
           }
           parentNode = null;
@@ -149,6 +150,24 @@ export class CaptionXmlParser {
       if (groupingText[i]) {
         var text = new CaptionText();
         text.chars = groupingText[i];
+
+        var firstChar = text.chars[0];
+        if (firstChar) {
+          if (firstChar.parentRubyNode) {
+            if (firstChar.parentRubyNode.nodeType === "RA") {
+              text.isRubyBefore = false;
+            }
+
+            var rubyValue = firstChar.parentRubyNode.attributes.filter((v) => {
+              return v.name === "VALUE";
+            })[0];
+            if (rubyValue) {
+              text.rubyText = this.textToCaptionChar(rubyValue.value);
+            }
+          } else if (firstChar.parentGroupNode) {
+            text.isGrouping = true;
+          }
+        }
         captionTexts.push(text);
       }
     }

@@ -89,10 +89,9 @@ export class Renderer {
       CaptionPosition.TOP_RIGHT, CaptionAlignment.START, true, false
     );
     // TODO 仮
-    var result = new CaptionXmlParser().parseXml(
-      "<I><RA VALUE='とうきょう'>東<B>京</B></RA>は<G>23</G><B><RB VALUE='は'>晴</RB>れ</B><BR /></I>"
+    var result = new CaptionXmlParser().parseCaptionXml(
+      "A<I><RA VALUE='とうきょう'>東<B>京</B></RA>は<G>23</G><B><RB VALUE='は'>晴</RB>れ</B><BR /></I>"
     );
-    debugger
     console.log(result);
     // TODO END
     this.captionRenderer.render();
