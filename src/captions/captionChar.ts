@@ -21,7 +21,7 @@ export class CaptionChar {
   private _isItalic : boolean = false;
   private _isReturn: boolean = false;
   private _parentGroupNode: any;
-  private _parentRubyNode: any; 
+  private _parentRubyNode: any;
 
   constructor(params: {
     char?: string,

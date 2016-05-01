@@ -23,6 +23,8 @@
     "./src/captions/verticalTypeSetter.ts",
     "./src/fonts/fontTable.ts",
     "./src/fonts/metrics.ts",
+    "./src/lib/array.ts",
+    "./src/lib/lib.ts",
     "./src/renderer/aspectRatio.ts",
     "./src/renderer/captionRenderer.ts",
     "./src/renderer/captionSafeZoneRenderer.ts",

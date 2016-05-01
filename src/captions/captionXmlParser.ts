@@ -1,6 +1,7 @@
 /// <reference path="../../typings/main.d.ts" />
 
-import {CaptionChar} from "./captionChar";
+import { CaptionChar } from "./captionChar";
+import { CaptionText } from "./captionText";
 
 export class CaptionXmlParser {
   private currentHid;
@@ -14,14 +15,15 @@ export class CaptionXmlParser {
     var dom = parser.parseFromString("<ROOT>" + text + "</ROOT>", "text/xml");
     var node = (<any>dom).children[0];
 
-    var splittedNodes = this.splitTextToNode(node, []);
+    var splittedNodes = this.convertTextToNode(node, []);
     var captionChars = this.nodeToCaptionChar(splittedNodes);
+    var captionText = this.groupByRuby(captionChars);
     // TODO: captionChars to captionText
 
-    return captionChars;
+    return captionText;
   }
 
-  private splitTextToNode(node, innerNodes: any[] = []) {
+  private convertTextToNode(node, innerNodes: any[] = []) {
     var children = node.childNodes;
     var results = [];
 
@@ -45,7 +47,7 @@ export class CaptionXmlParser {
           attributes: attributes
         });
 
-        results = results.concat(this.splitTextToNode(n, p));
+        results = results.concat(this.convertTextToNode(n, p));
       }
     } else {
       results = [
@@ -106,5 +108,10 @@ export class CaptionXmlParser {
       }
     }
     return chars;
+  }
+
+  private groupByRuby(captionChar: CaptionChar[]) : CaptionText[] {
+    var groupingText = [];
+    return null;
   }
 }

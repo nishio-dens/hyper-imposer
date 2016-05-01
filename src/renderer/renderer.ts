@@ -92,6 +92,7 @@ export class Renderer {
     var result = new CaptionXmlParser().parseXml(
       "<I><R VALUE='とうきょう'>東<B>京</B>は晴れ</R><BR /></I>"
     );
+    debugger
     console.log(result);
     // TODO END
     this.captionRenderer.render();
