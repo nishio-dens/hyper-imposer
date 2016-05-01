@@ -1,5 +1,6 @@
 /// <reference path="../typings/main.d.ts" />
 
+import "./lib/lib";
 import { AspectRatio } from "./renderer/aspectRatio";
 import { Renderer } from "./renderer/renderer";
 
